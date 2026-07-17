@@ -1,0 +1,308 @@
+# Fotonovela — "O Escritório dos Agentes" — Bíblia de Personagens e Roteiros
+
+Recurso narrativo recorrente do curso "Engenharia de Software na Era dos
+Agentes". Mesmo mecanismo já usado nos cursos IA e Git (ver
+`[[garagem-fotonovela]]`): fotonovela = "vídeo interativo" no lugar do
+player, 16:9, carrossel de quadros com balão HTML por cima da imagem
+(nunca texto embutido na foto). Abre E fecha cada módulo, 8-12 quadros.
+
+## 1. Título geral
+
+**"O Escritório dos Agentes"**
+
+## 2. Conceito narrativo
+
+Quatro profissionais de uma empresa de tecnologia fictícia enfrentam, a cada
+módulo, um desafio relacionado a agentes de IA — antes de aprenderem o
+conteúdo (abertura, tudo dá errado de um jeito familiar) e depois de
+aplicá-lo (fecho, a mesma situação é conduzida com método). Humor de
+escritório + exagero de novela brasileira, sempre terminando em reflexão,
+nunca em humilhação. Competência não é saber tudo — é saber investigar,
+formular problemas, usar ferramentas com responsabilidade, pedir ajuda,
+aprender e assumir responsabilidade pelas decisões.
+
+## 3. Bíblia dos 4 personagens
+
+### Personagem 1 — Fernando Costa Villela ("Fê")
+
+- **Idade**: ~52 anos
+- **Função**: Engenheiro de Software Sênior
+- **Experiência**: 25 anos — sistemas legados, produção, incidentes, arquitetura
+- **Personalidade**: técnico, cético, direto, orgulhoso do próprio ofício
+- **Insegurança principal**: medo de que agentes tornem sua experiência irrelevante
+- **Qualidade principal**: profundidade técnica real, faro pra risco e ponto cego que ninguém mais vê
+- **Defeito/ponto cego**: critica a IA antes de testar; usa cautela excessiva pra esconder insegurança
+- **Forma de falar**: frases curtas, sarcasmo seco, referências a "no meu tempo"
+- **Bordão**: "Isso aí já quebrou produção uma vez. Confia em mim."
+- **Relação com os outros**: implica com a Duda... digo, com a Carol (personagem 2), mas a respeita; é quem o Rafa (personagem 4) mais teme decepcionar
+- **Arco**: percebe que sua experiência vira ainda mais valiosa quando ele orienta e revisa agentes em vez de competir com eles
+- **Aparência física**: homem branco, 1,75m, compleição robusta, óculos de leitura pendurados no pescoço
+- **Cabelo**: grisalho, curto, levemente ralo no topo
+- **Roupas**: camisa polo azul-marinho SEMPRE (cor fixa), calça social cinza, crachá antigo e surrado
+- **Acessórios**: caneca de café surrada com a frase "Funciona na minha máquina" (elemento recorrente #1)
+- **Postura corporal**: braços cruzados, apoiado na mesa
+- **Expressões frequentes**: sobrancelha erguida, olhar de dúvida
+- **Paleta visual**: tons frios — azul-marinho, cinza, branco
+- **Nunca muda**: polo azul-marinho + óculos no pescoço + caneca "Funciona na minha máquina"
+
+### Personagem 2 — Carolina "Carol" Mendes Prado
+
+- **Idade**: ~27 anos
+- **Função**: Desenvolvedora Pleno
+- **Experiência**: 4 anos, entusiasta de ferramentas novas
+- **Personalidade**: energética, curiosa, iniciativa acima da média
+- **Insegurança principal**: confunde velocidade com qualidade; confia demais na primeira resposta do agente
+- **Qualidade principal**: aprende rápido, não tem medo de experimentar
+- **Defeito/ponto cego**: aceita a primeira resposta do agente sem revisar
+- **Forma de falar**: rápida, cheia de gírias de tech, fala "bora" toda hora
+- **Bordão**: "Já tá pronto! ...pronto pronto? Ou pronto-pronto-mesmo?"
+- **Relação com os outros**: provoca o Fernando com carinho; é próxima do Rafa (o ajuda sem fazer ele se sentir mal)
+- **Arco**: aprende a dar contexto, limites, pedir plano, testes e revisão humana antes de comemorar
+- **Aparência física**: mulher parda, 1,65m, cabelo cacheado castanho-escuro na altura dos ombros, brincos grandes de argola
+- **Cabelo**: cacheado, castanho-escuro, sempre na altura dos ombros — nunca liso, nunca outra cor
+- **Roupas**: moletom verde-oliva SEMPRE (cor fixa) com estampa geométrica discreta, tênis colorido
+- **Acessórios**: adesivo de laptop com um raio estilizado (elemento recorrente #2 — o notebook dela)
+- **Postura corporal**: sempre inclinada pra frente, digitando ou apontando pra tela
+- **Expressões frequentes**: sorriso largo, olhos arregalados de empolgação
+- **Paleta visual**: tons quentes — verde-oliva, laranja, mostarda
+- **Nunca muda**: moletom verde-oliva + cabelo cacheado castanho-escuro + adesivo de raio no laptop
+
+### Personagem 3 — Marcelo "Marcelo" Andrade Tanaka
+
+- **Idade**: ~38 anos
+- **Função**: Líder Técnico (Tech Lead)
+- **Experiência**: 14 anos, equilibra prazo, qualidade, segurança e expectativa de negócio
+- **Personalidade**: conciliador, organizado, carrega peso além da conta
+- **Insegurança principal**: acredita que deveria ter todas as respostas
+- **Qualidade principal**: visão de conjunto, sabe priorizar
+- **Defeito/ponto cego**: busca atalhos sob pressão; centraliza decisão demais
+- **Forma de falar**: tom calmo que esconde estresse; usa listas mentais em voz alta ("primeiro... segundo...")
+- **Bordão**: "Deixa comigo que eu resolvo." (dito segurando uma xícara tremendo)
+- **Relação com os outros**: mediador entre Fernando e Carol; cobra prazo mas protege o Rafa de pressão excessiva
+- **Arco**: aprende a orquestrar pessoas, agentes, ferramentas e processos sem concentrar toda decisão nele
+- **Aparência física**: homem asiático-brasileiro, 1,70m, magro, sempre com leve olheira
+- **Cabelo**: preto, curto, bem penteado (o único sinal de "controle" que ele mantém)
+- **Roupas**: camisa social azul-clara de manga arregaçada SEMPRE, sem gravata
+- **Acessórios**: um Post-it colado na testa em momentos de crise (elemento recorrente #3 — piada visual recorrente)
+- **Postura corporal**: mãos na cintura ou gesticulando contando nos dedos
+- **Expressões frequentes**: sorriso tenso, olhar pro relógio
+- **Paleta visual**: tons neutros com um azul-claro de destaque
+- **Nunca muda**: camisa azul-clara manga arregaçada + cabelo preto bem penteado
+
+### Personagem 4 — Rafael "Rafa" Souza Lima
+
+- **Idade**: ~23 anos
+- **Função**: Desenvolvedor Júnior (em transição de carreira — ex-suporte técnico)
+- **Experiência**: 8 meses de empresa
+- **Personalidade**: observador, inteligente, quieto
+- **Insegurança principal**: medo de perguntar e revelar que não entende algo; acha que todo mundo ao redor sabe mais
+- **Qualidade principal**: faz perguntas certeiras quando finalmente pergunta
+- **Defeito/ponto cego**: interpreta a confiança alheia como competência absoluta
+- **Forma de falar**: hesitante, começa frases e recua ("Ah, deixa quieto", "Acho que... não, esquece")
+- **Bordão**: "Só eu que não sabia disso?" (sempre dito baixinho, quase pra si mesmo)
+- **Relação com os outros**: teme decepcionar o Fernando; a Carol é quem o incentiva a falar
+- **Arco**: percebe que os mais experientes também têm dúvidas, e que formular boas perguntas é capacidade de engenharia
+- **Aparência física**: homem negro, 1,80m, magro, postura levemente encurvada
+- **Cabelo**: black power curto, bem aparado
+- **Roupas**: camiseta cinza-mescla lisa SEMPRE, mochila surrada nunca tirada das costas
+- **Acessórios**: um caderninho de notas físico que ele nunca mostra a ninguém (elemento recorrente — mas sozinho não conta como um dos 3 oficiais)
+- **Postura corporal**: ombros pra dentro, olha de lado antes de falar
+- **Expressões frequentes**: sobrancelhas franzidas de dúvida, olhar baixo
+- **Paleta visual**: tons dessaturados — cinza, bege
+- **Nunca muda**: camiseta cinza-mescla + mochila nas costas + black power curto
+
+## 4. Mapa das relações
+
+```
+Fernando (sênior cético) ──implica com──> Carol (entusiasta)
+Fernando ──intimida sem querer──> Rafa (júnior)
+Carol ──incentiva──> Rafa
+Marcelo (líder) ──media──> Fernando x Carol
+Marcelo ──protege da pressão──> Rafa
+Rafa ──teme decepcionar──> Fernando
+Todos ──se reportam informalmente a──> Marcelo
+```
+
+## 5. Regras de continuidade visual (OBRIGATÓRIO em todo prompt de quadro)
+
+Persona canônica a colar em TODO prompt que contiver o personagem:
+
+- **Fernando**: `Fernando (SEMPRE O MESMO HOMEM: branco, 52 anos, robusto, óculos de leitura pendurados no pescoço por um cordão, cabelo grisalho curto e ralo no topo, polo azul-marinho, calça social cinza, segurando ou perto de uma caneca branca surrada com os dizeres "Funciona na minha máquina")`
+- **Carol**: `Carol (SEMPRE A MESMA MULHER: parda, 27 anos, cabelo CACHEADO castanho-escuro na altura dos ombros — nunca liso, nunca outra cor —, brincos de argola grandes, moletom verde-oliva com estampa geométrica discreta, notebook com adesivo de raio estilizado)`
+- **Marcelo**: `Marcelo (SEMPRE O MESMO HOMEM: asiático-brasileiro, 38 anos, magro, olheiras leves, cabelo preto curto bem penteado, camisa social azul-clara de manga arregaçada, sem gravata)`
+- **Rafa**: `Rafa (SEMPRE O MESMO HOMEM: negro, 23 anos, magro, alto, cabelo black power curto e aparado, camiseta cinza-mescla lisa, mochila surrada sempre nas costas, postura de ombros levemente encurvados)`
+
+Guard de anatomia (colar em todo prompt com pessoa):
+`ANATOMIA HUMANA CORRETA: exatamente dois braços, duas mãos e cinco dedos por mão, sem membros/mãos/dedos extras/duplicados/deformados. TELAS sempre viradas pra pessoa (nunca a traseira/tampa pra frente).`
+
+Regra de balão (aplicada depois, no editor — não no prompt de imagem):
+balão SEMPRE no canto oposto ao rosto do personagem que fala; cauda aponta de
+volta pra quem fala. Nenhum balão pode ser desenhado dentro da imagem pelo
+Gemini — se sair desenhado, regenerar o quadro.
+
+Regra de ambiente: empresa e sistemas 100% fictícios — nenhuma marca, cliente,
+produto, código, nome interno ou dado real. Nada de estética infantil, nada
+de super-herói, nada de caricatura deformada. Fotorrealista/HQ contemporânea
+com atores reais.
+
+## 6. Elementos recorrentes (mínimo 3, aparecem todo módulo)
+
+1. **A caneca do Fernando** — "Funciona na minha máquina" (o texto na caneca é
+   fixo; muda de contexto/piada em torno dela, nunca o objeto).
+2. **O adesivo de raio no notebook da Carol.**
+3. **O Post-it na testa do Marcelo** — aparece só em momentos de pico de
+   estresse/crise, como piada visual recorrente.
+4. (bônus, não conta como 1 dos 3 oficiais) **A planta murcha do escritório**,
+   que piora visivelmente a cada incidente — termômetro cômico de quão mal a
+   semana está indo.
+
+## 7. Roteiro completo — Abertura do Módulo 1
+
+**Tema**: "O Engenheiro na Era dos Agentes"
+**Situação**: pedido vago de "colocar IA no atendimento ao cliente"; a
+proposta do agente é exagerada; a equipe se impressiona com o volume antes de
+perceber que ninguém definiu nada. Termina ANTES da solução, em pergunta
+reflexiva.
+
+### Quadro 1
+- **Cenário**: sala de reunião, TV com um e-mail aberto projetado (sem texto
+  legível, só um bloco de texto borrado simulando parágrafo).
+- **Personagens**: Marcelo, Fernando, Carol, Rafa — todos sentados à mesa.
+- **Enquadramento**: plano geral, Marcelo de pé apontando pra TV.
+- **Ação**: Marcelo acabou de ler o pedido do "cliente" em voz alta.
+- **Expressões**: Marcelo tenso sorrindo; Fernando já de braços cruzados;
+  Carol com os olhos brilhando; Rafa olhando pros outros pra entender a reação certa.
+- **Narração**: "Segunda-feira. Um pedido de duas linhas vira o problema da semana."
+- **Diálogo (Marcelo)**: "'Colocar inteligência artificial no atendimento.' Só isso. Prazo: ontem."
+- **Intenção de humor**: o contraste do pedido vago com o prazo impossível.
+- **Ideia pedagógica**: pedidos vagos não têm objetivo nem critério de aceite.
+- **Prompt visual completo**: `Sala de reunião de escritório de tecnologia fictício, luz de escritório comum, uma TV na parede mostrando um e-mail com texto borrado ilegível. Fernando (SEMPRE O MESMO HOMEM: branco, 52 anos, robusto, óculos de leitura pendurados no pescoço por um cordão, cabelo grisalho curto e ralo no topo, polo azul-marinho, calça social cinza) sentado de braços cruzados com expressão cética. Carol (SEMPRE A MESMA MULHER: parda, 27 anos, cabelo CACHEADO castanho-escuro na altura dos ombros, brincos de argola grandes, moletom verde-oliva com estampa geométrica discreta) sentada com olhos brilhando de empolgação. Rafa (SEMPRE O MESMO HOMEM: negro, 23 anos, magro, alto, cabelo black power curto, camiseta cinza-mescla, mochila nas costas mesmo sentado) olhando de lado pros colegas, incerto. Marcelo (SEMPRE O MESMO HOMEM: asiático-brasileiro, 38 anos, magro, olheiras leves, cabelo preto curto bem penteado, camisa social azul-clara manga arregaçada) de pé apontando pra TV com sorriso tenso. Still fotográfico realista estilo fotonovela/HQ contemporânea, enquadramento cinematográfico horizontal 16:9, sem texto legível na imagem além do bloco borrado na TV. ANATOMIA HUMANA CORRETA: exatamente dois braços, duas mãos e cinco dedos por mão, sem membros extras ou deformados. Espaço livre nas bordas superior e inferior pra balões de fala.`
+- **Continuidade**: primeira aparição do grupo — estabelecer roupas/cores fixas aqui.
+
+### Quadro 2
+- **Cenário**: mesmo, plano fechado em Fernando.
+- **Personagens**: Fernando (foco), Carol ao fundo desfocada abrindo o notebook.
+- **Enquadramento**: close-up dramático (zoom de novela) no rosto de Fernando.
+- **Ação**: Fernando já critica antes de qualquer coisa acontecer.
+- **Expressões**: sobrancelha erguida, desconfiança máxima.
+- **Diálogo (Fernando)**: "Isso aí vai virar sopa de tecnologia. Sinto no ar."
+- **Intenção de humor**: exagero de "sexto sentido" de novela + o clichê do sênior cético.
+- **Ideia pedagógica**: criticar sem propor alternativa estruturada não ajuda.
+- **Prompt visual completo**: `Close-up dramático estilo novela, zoom em Fernando (SEMPRE O MESMO HOMEM: branco, 52 anos, robusto, óculos de leitura pendurados no pescoço, cabelo grisalho curto e ralo no topo, polo azul-marinho) com sobrancelha erguida e expressão de desconfiança extrema, luz levemente dramática vinda de lado. Ao fundo desfocado, Carol (cabelo cacheado castanho-escuro, moletom verde-oliva) abrindo um notebook com adesivo de raio estilizado na tampa. Still fotográfico realista estilo fotonovela/HQ, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão. Espaço livre nas bordas pra balão de fala.`
+- **Continuidade**: reforça o adesivo de raio da Carol.
+
+### Quadro 3
+- **Cenário**: mesmo, Carol de frente pro notebook.
+- **Personagens**: Carol (foco).
+- **Enquadramento**: plano médio, tela do notebook virada pra ela (nunca a tampa).
+- **Ação**: Carol já está digitando no agente de código.
+- **Expressões**: sorriso confiante, dedos rápidos no teclado.
+- **Diálogo (Carol)**: "Relaxa! Eu já mandei pro agente: 'crie um chatbot inteligente'. Bora ver o que sai!"
+- **Intenção de humor**: a velocidade dela contrastando com a vagueza do próprio pedido.
+- **Ideia pedagógica**: pedido vago pro agente reproduz o pedido vago do cliente.
+- **Prompt visual completo**: `Plano médio de escritório fictício, Carol (SEMPRE A MESMA MULHER: parda, 27 anos, cabelo CACHEADO castanho-escuro na altura dos ombros, brincos de argola grandes, moletom verde-oliva com estampa geométrica discreta) sentada de frente pro notebook com adesivo de raio na tampa, tela virada pra ela mostrando uma interface de chat genérica com texto borrado ilegível, sorriso confiante, dedos em movimento sobre o teclado. Still fotográfico realista estilo fotonovela/HQ, 16:9, sem texto legível de verdade na tela. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão. TELA sempre virada pra pessoa. Espaço livre pra balão de fala.`
+- **Continuidade**: notebook = mesmo adesivo de raio sempre.
+
+### Quadro 4
+- **Cenário**: mesmo, Rafa isolado num canto.
+- **Personagens**: Rafa (foco).
+- **Enquadramento**: plano fechado, Rafa olhando de lado pros outros.
+- **Ação**: Rafa não entendeu o pedido mas não vai perguntar.
+- **Expressões**: sobrancelhas franzidas, olhar baixo.
+- **Narração**: "Rafa também não entendeu. Mas será que só ele?"
+- **Diálogo (pensamento, Rafa)**: "Será que eu devia saber isso...?"
+- **Intenção de humor/reflexão**: o silêncio dele é o ponto emocional da cena.
+- **Ideia pedagógica**: medo de perguntar impede aprendizado.
+- **Prompt visual completo**: `Plano fechado de escritório fictício, Rafa (SEMPRE O MESMO HOMEM: negro, 23 anos, magro, alto, cabelo black power curto e aparado, camiseta cinza-mescla lisa, mochila surrada nas costas) sentado num canto da mesa, ombros levemente encurvados, olhando de lado com sobrancelhas franzidas de dúvida, olhar baixo. Still fotográfico realista estilo fotonovela/HQ, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão. Espaço livre pra balão de pensamento.`
+- **Continuidade**: mochila sempre nas costas, mesmo sentado.
+
+### Quadro 5
+- **Cenário**: mesmo, todos olhando pra tela da Carol agora projetada na TV.
+- **Personagens**: os 4.
+- **Enquadramento**: plano geral, zoom dramático de novela na TV.
+- **Ação**: a resposta do agente aparece — um diagrama de arquitetura absurdamente grande e cheio de caixas.
+- **Expressões**: todos de boca aberta, impressionados.
+- **Narração**: "O agente respondeu. E respondeu... bastante."
+- **Onomatopeia**: "TAN TAN TAN!" (efeito de revelação dramática)
+- **Intenção de humor**: exagero de novela — música imaginária de suspense na cena.
+- **Ideia pedagógica**: volume de saída não é sinal de qualidade.
+- **Prompt visual completo**: `Sala de reunião fictícia, TV na parede mostrando um diagrama de arquitetura de sistema extremamente denso e exagerado, cheio de caixas e setas coloridas, sem texto legível real (formas e blocos genéricos simulando complexidade). Fernando, Carol, Marcelo e Rafa (mesma aparência de sempre de cada um) todos olhando pra TV com expressão de espanto, boca ligeiramente aberta, luz da tela iluminando os rostos, ângulo levemente baixo estilo revelação dramática de novela. Still fotográfico realista estilo fotonovela/HQ, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão para cada personagem. Espaço livre no topo pra caixa de narração.`
+- **Continuidade**: reforça roupas/cores fixas dos 4 juntos.
+
+### Quadro 6
+- **Cenário**: mesmo, Marcelo derrama café.
+- **Personagens**: Marcelo (foco), Fernando ao lado.
+- **Enquadramento**: plano médio, café caindo em câmera de novela (leve slow motion sugerido pela pose).
+- **Ação**: Marcelo ouve a palavra "produção" e derruba o café.
+- **Expressões**: Marcelo em pânico contido; Fernando revirando os olhos.
+- **Diálogo (Fernando)**: "Calma, ninguém falou em subir isso pra produção ainda."
+- **Diálogo (Marcelo)**: "EU SEI. MAS E SE ALGUÉM FALAR?"
+- **Intenção de humor**: exagero físico clássico de comédia de escritório.
+- **Ideia pedagógica**: ansiedade antecipando decisões que ainda nem foram tomadas.
+- **Prompt visual completo**: `Plano médio de escritório fictício, Marcelo (SEMPRE O MESMO HOMEM: asiático-brasileiro, 38 anos, magro, olheiras leves, cabelo preto curto bem penteado, camisa social azul-clara manga arregaçada) com uma xícara branca caindo da mão, café derramando no ar, expressão de pânico contido, boca entreaberta. Fernando (mesma aparência de sempre: polo azul-marinho, óculos no pescoço, cabelo grisalho) ao lado revirando os olhos com uma leve meia-risada. Still fotográfico realista estilo fotonovela/HQ, leve efeito de câmera lenta na queda do café, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão. Espaço livre pra dois balões de fala.`
+- **Continuidade**: xícara branca genérica do Marcelo (não confundir com a caneca do Fernando).
+
+### Quadro 7
+- **Cenário**: mesmo, Rafa finalmente reage.
+- **Personagens**: Rafa (foco), Carol ao lado incentivando.
+- **Enquadramento**: plano fechado, Carol com a mão no ombro de Rafa.
+- **Ação**: Rafa quase pergunta algo, mas recua.
+- **Expressões**: Rafa hesitante; Carol sorrindo, incentivando com o olhar.
+- **Diálogo (Rafa)**: "Gente, eu só queria entender uma coisa... ah, deixa quieto."
+- **Diálogo (Carol)**: "Pergunta! Sério."
+- **Intenção de humor/reflexão**: o momento mais humano da cena — vulnerabilidade real sem punchline.
+- **Ideia pedagógica**: colegas que incentivam perguntas mudam a cultura do time.
+- **Prompt visual completo**: `Plano fechado de escritório fictício, Rafa (SEMPRE O MESMO HOMEM: negro, 23 anos, magro, alto, cabelo black power curto, camiseta cinza-mescla, mochila nas costas) com expressão hesitante, começando a falar e recuando, olhar baixo. Carol (SEMPRE A MESMA MULHER: cabelo cacheado castanho-escuro, moletom verde-oliva) ao lado com a mão no ombro dele, sorriso caloroso e incentivador. Still fotográfico realista estilo fotonovela/HQ, luz mais suave e íntima que os quadros anteriores, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão. Espaço livre pra dois balões de fala.`
+- **Continuidade**: primeiro momento de conexão Carol-Rafa — reaparece em módulos futuros.
+
+### Quadro 8
+- **Cenário**: mesmo, plano geral final, todos olhando pra câmera.
+- **Personagens**: os 4.
+- **Enquadramento**: plano geral, os 4 olhando diretamente pra câmera (quebra a quarta parede, estilo novela).
+- **Ação**: congelamento da cena — ninguém decidiu nada ainda.
+- **Expressões**: mistura de dúvida e expectativa nos 4 rostos.
+- **Narração**: "Ninguém definiu o problema. Ninguém definiu o comportamento esperado. Ninguém decidiu quem aprovaria isso."
+- **Narração (pergunta final)**: "Quando o agente entrega muita coisa, isso significa que a equipe avançou — ou que agora existem mais decisões não examinadas?"
+- **Intenção de humor**: nenhum — fecho reflexivo, sem punchline.
+- **Ideia pedagógica**: gancho direto pra tese do Módulo 1 (o curso não é sobre ferramentas; agentes ampliam capacidade, não removem responsabilidade).
+- **Prompt visual completo**: `Plano geral de escritório fictício, Fernando, Carol, Marcelo e Rafa (mesma aparência de sempre de cada um) lado a lado olhando diretamente pra câmera, expressões misturando dúvida e expectativa, luz neutra de fim de cena, leve profundidade de campo. Still fotográfico realista estilo fotonovela/HQ, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão para cada um dos quatro. Espaço livre no topo e na base pra caixas de narração.`
+- **Continuidade**: pose de "grupo" de referência pra futuras aberturas/fechos do módulo 1.
+
+## 8. Prompts visuais mestre — 1 por personagem (uso em still solo/thumbnail)
+
+- **Fernando (mestre)**: `Retrato de still fotográfico realista de Fernando (SEMPRE O MESMO HOMEM: branco, 52 anos, robusto, óculos de leitura pendurados no pescoço por um cordão, cabelo grisalho curto e ralo no topo, polo azul-marinho, calça social cinza), segurando uma caneca branca surrada com os dizeres "Funciona na minha máquina", braços cruzados, expressão cética, ambiente de escritório de tecnologia fictício desfocado ao fundo, 16:9, sem texto legível além da caneca. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão.`
+- **Carol (mestre)**: `Retrato de still fotográfico realista de Carol (SEMPRE A MESMA MULHER: parda, 27 anos, cabelo CACHEADO castanho-escuro na altura dos ombros, brincos de argola grandes, moletom verde-oliva com estampa geométrica discreta), sorriso largo, segurando um notebook com adesivo de raio estilizado na tampa virado pra ela, ambiente de escritório fictício desfocado ao fundo, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão.`
+- **Marcelo (mestre)**: `Retrato de still fotográfico realista de Marcelo (SEMPRE O MESMO HOMEM: asiático-brasileiro, 38 anos, magro, olheiras leves, cabelo preto curto bem penteado, camisa social azul-clara manga arregaçada), mãos na cintura, sorriso tenso, ambiente de escritório fictício desfocado ao fundo, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão.`
+- **Rafa (mestre)**: `Retrato de still fotográfico realista de Rafa (SEMPRE O MESMO HOMEM: negro, 23 anos, magro, alto, cabelo black power curto e aparado, camiseta cinza-mescla lisa, mochila surrada nas costas), ombros levemente encurvados, olhar de lado, ambiente de escritório fictício desfocado ao fundo, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão.`
+
+## 9. Prompt de grupo (os 4 juntos, referência de continuidade)
+
+`Plano geral de escritório de tecnologia fictício, os quatro personagens lado a lado: Fernando (branco, 52 anos, robusto, óculos no pescoço, polo azul-marinho, cabelo grisalho), Carol (parda, 27 anos, cabelo cacheado castanho-escuro nos ombros, moletom verde-oliva, brincos de argola), Marcelo (asiático-brasileiro, 38 anos, magro, camisa azul-clara manga arregaçada, cabelo preto bem penteado) e Rafa (negro, 23 anos, magro, alto, camiseta cinza-mescla, mochila nas costas, cabelo black power curto). Still fotográfico realista estilo fotonovela/HQ contemporânea, luz de escritório natural, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: exatamente dois braços, duas mãos e cinco dedos por mão para cada um dos quatro personagens, sem membros extras ou deformados.`
+
+## 10. Checklist de continuidade (verificar ANTES de gerar qualquer capítulo futuro)
+
+- [ ] Fernando: polo azul-marinho + óculos no pescoço + caneca "Funciona na minha máquina" + cabelo grisalho ralo no topo?
+- [ ] Carol: moletom verde-oliva + cabelo CACHEADO castanho-escuro nos ombros + brincos de argola + adesivo de raio no notebook?
+- [ ] Marcelo: camisa azul-clara manga arregaçada + cabelo preto bem penteado + (Post-it na testa só em cena de crise)?
+- [ ] Rafa: camiseta cinza-mescla + mochila nas costas + cabelo black power curto?
+- [ ] Nenhum personagem com anatomia deformada (2 braços, 2 mãos, 5 dedos)?
+- [ ] Nenhuma tela de notebook/celular virada de costas pra câmera?
+- [ ] Nenhum balão desenhado DENTRO da imagem pelo Gemini?
+- [ ] Nenhum texto legível de verdade na imagem (só blocos borrados quando necessário)?
+- [ ] Nenhuma marca, cliente, produto ou dado real citado?
+- [ ] Ambiente sempre o mesmo escritório fictício (mesma paleta arquitetônica)?
+- [ ] Após gerar: varredura de posição de balão (canto oposto ao rosto) feita quadro a quadro?
+
+## 11. Arco emocional (Módulo 1)
+
+- **Fernando**: começa cético e fechado; termina sem solução, mas o ceticismo
+  dele já plantou a dúvida certa pro grupo (ainda não resolvida — arco continua).
+- **Carol**: começa confiante e rápida; termina impressionada mas ainda sem
+  perceber o próprio ponto cego (confundir volume com qualidade).
+- **Marcelo**: começa sob pressão, tenta segurar tudo sozinho; termina em
+  pânico contido, sem conseguir organizar a equipe ainda.
+- **Rafa**: começa em silêncio, quase pergunta e recua; termina com uma
+  primeira fresta de coragem (a Carol o incentivou), mas ainda não perguntou de verdade.
+
+*(Arco de Módulo 2 fica para quando produzirmos o fecho correspondente —
+escopo desta rodada é só a abertura do Módulo 1, por instrução do Diego.)*
