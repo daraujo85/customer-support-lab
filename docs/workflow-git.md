@@ -1,11 +1,37 @@
 # Fluxo de git por aula — branch + tags
 
-Toda aula que efetivamente mexer no laboratório segue este fluxo (decidido
-pelo Diego em 2026-07-17). "Mexer" inclui tanto uma evolução funcional nova
-quanto uma mudança pequena e reversível (ex.: adicionar um teste cobrindo
-comportamento já existente) — o critério não é o tamanho da mudança, é se
-algo no repo foi de fato commitado por causa da aula. Aulas puramente
-conceituais (sem nenhum commit) ficam de fora e não precisam de branch/tag.
+**Regra fundamental (corrigida em 2026-07-17): branch não existe porque existe
+aula. Branch existe porque existe mudança real no repositório.** O laboratório
+aparecer na tela, ser lido ou ser explicado pelo Claude Code não é motivo pra
+branch — só commit de verdade é.
+
+## As três categorias de aula
+
+| Tipo de aula | Usa o laboratório | Altera repositório | Branch |
+|---|---:|---:|---:|
+| Conceitual | talvez | não | não |
+| Demonstração e leitura | sim | não | não |
+| Evolução prática | sim | sim | sim |
+
+Uma aula "de demonstração e leitura" pode ter o Claude Code lendo arquivos,
+explicando arquitetura, respondendo perguntas sobre o código, até mostrando um
+plano **hipotético** — nada disso passa por `git commit`, então não tem
+branch. Só quando algo é de fato escrito no repositório (código, teste,
+config, documentação do laboratório) é que a aula ganha
+`lesson/mXX-aYY-slug` + tags `start`/`end`.
+
+## Módulo 1
+
+| Aula | Uso do laboratório | Branch |
+|---|---|---|
+| 1.1 — Este curso não é sobre ferramentas | apenas apresentação | nenhuma |
+| 1.2 — Programação, engenharia e responsabilidade | referência conceitual | nenhuma |
+| 1.3 — Chatbot determinístico | criação do projeto | `lesson/m01-a03-chatbot-deterministico` |
+| 1.4 — Do codador ao orquestrador | leitura e análise do código existente | nenhuma |
+| 1.5 — Human in the Loop | análise dos pontos de aprovação | nenhuma |
+| 1.6 — Evolução da engenharia | referência à arquitetura | nenhuma |
+| 1.7 — O curso como prova do método | demonstração da esteira de produção | nenhuma |
+| 1.8 — Prova e reflexão | nenhuma evolução | nenhuma |
 
 A Aula 1.3 foi commitada direto na `main` (antes deste padrão existir) — o fim
 dela ficou marcado retroativamente com a tag `m01-a03-end` e a branch
@@ -13,17 +39,16 @@ dela ficou marcado retroativamente com a tag `m01-a03-end` e a branch
 é um marcador retroativo, não representa um fluxo isolado de verdade, já que o
 trabalho já tinha acontecido direto na `main`).
 
-A Aula 1.4 — Do codador ao orquestrador — não é uma evolução funcional do
-laboratório (o chatbot determinístico já está pronto desde a 1.3); a aula usa
-o código existente pra demonstrar como conduzir um agente (contexto → plano →
-revisão → autorização → menor mudança → teste → diff), e o único artefato
-gerado é um teste cobrindo um comportamento que já existia e não tinha
-cobertura (encerramento da sessão num estado final). Mesmo sendo uma mudança
-mínima, ela seguiu o fluxo completo: `lesson/m01-a04-do-codador-ao-orquestrador`,
-tags `m01-a04-start`/`m01-a04-end`, já mergeada na `main`.
+A Aula 1.4 — Do codador ao orquestrador — usa o laboratório **só como objeto
+de análise**: leitura, explicação, perguntas, comparação de um pedido vago com
+um pedido bem contextualizado, plano hipotético. Nenhum arquivo é alterado,
+então não tem branch, não tem commit — ver `docs/aula-1-4-roteiro.md`. (Uma
+primeira tentativa desta aula chegou a criar um teste só pra ter algo pra
+commitar e justificar uma branch — foi revertido por ser pedagogicamente
+errado: o motivo tem que vir da aula, não a branch justificar a si mesma.)
 
-A tabela em "Plano de branches do curso inteiro" (abaixo) lista as próximas
-aulas com evolução funcional de verdade — a partir dela, a primeira é a 2.1.
+A tabela em "Plano de branches do curso inteiro" (abaixo) lista as aulas dos
+demais módulos com evolução funcional de verdade — a primeira é a 2.1.
 
 ## Por que branch + tag, não só branch solta
 
@@ -54,14 +79,16 @@ anterior, sem outros commits não relacionados no meio. Se por algum motivo a
 explicitamente da tag de fim da aula anterior em vez de `main`:
 
 ```bash
-git checkout m01-a04-end          # tag de fim da aula anterior — não "main" às cegas
+git checkout m01-a03-end          # tag de fim da ÚLTIMA aula que gerou branch — não "main" às cegas
 git tag m02-a01-start
 git checkout -b lesson/m02-a01-payload-conversacao
 ```
 
-O laboratório é uma linha do tempo contínua: cada aula evolui exatamente de
-onde a anterior parou (`m01-a03-end` → `m01-a04-end` → `m02-a01-end` → ...),
-nunca de um estado paralelo ou mais antigo.
+O laboratório é uma linha do tempo contínua: cada aula com branch evolui
+exatamente de onde a última aula-com-branch parou. Aulas conceituais ou de
+demonstração (sem commit — ex. 1.4, 1.5) não entram nessa cadeia porque não
+geram tag: a próxima aula com branch (2.1) deriva direto de `m01-a03-end`, não
+de uma tag inexistente da 1.4.
 
 **2. Durante a gravação** — o Claude Code (real ou shim, conforme o caso — ver
 `docs/aula-1-3-roteiro.md` sobre quando usar shim) altera os arquivos nessa
