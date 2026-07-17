@@ -1,8 +1,24 @@
 # Aula 1.6 — Fundamentos que permanecem (DDD, testes, arquitetura, DevOps, SDD)
 
-> ✅ Implementado e registrado no repo (branch mergeada, tags criadas).
-> Diferente das aulas 1.4/1.5, esta aula **tem evolução real no laboratório**
-> — pequena, protegida por testes, sem funcionalidade nova.
+> ✅ PUBLICADA — vídeo gerado (21/21 cues, ~775s), legendas (CC) enviadas,
+> lesson `9ae828ad-b306-4383-a7c4-7b21b301a4d4`. Áudio:
+> `eng-sw-era-agents-m01-a06.mp3`. Diferente das aulas 1.4/1.5, esta aula
+> **tem evolução real no laboratório** — pequena, protegida por testes, sem
+> funcionalidade nova. O vídeo inspeciona o histórico JÁ EXISTENTE (git
+> switch --detach entre as tags, git log, git diff reais), não finge criar
+> nada ao vivo. 6 clipes reais (host) via `.pipeline/esa/m1a6-*.sh` +
+> `render_host.sh`; 2 deles usam o shim do Claude Code
+> (`CLAUDE_SHIM_MODE=analysis`, steps `regra_de_negocio` e `compara_tags`) —
+> os outros 4 são comandos git/docker 100% reais, sem shim nenhum. Montagem
+> em `.pipeline/build_esa_m1a6.py`.
+>
+> ⚠️ Armadilha encontrada na gravação: `git log`/`git diff` sem
+> `--no-pager` abrem `less` e travam pra sempre num terminal não-interativo
+> (ficou preso ~1h46 até eu perceber e matar o processo). Fix: exportar
+> `GIT_PAGER=cat` e usar `git --no-pager <comando>` em todo script de
+> terminal real que rodar `log`/`diff`/`show`. Também usei `--no-merges` no
+> `git log start..end` pra bater com "os três commits reais" da narração
+> (sem isso, o merge commit aparece como um 4º item).
 
 ```text
 Branch: lesson/m01-a06-fundamentos-engenharia
