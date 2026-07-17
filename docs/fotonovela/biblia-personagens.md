@@ -268,6 +268,39 @@ reflexiva.
 - **Prompt visual completo**: `Plano geral de escritório fictício, Fernando, Carol, Marcelo e Rafa (mesma aparência de sempre de cada um) lado a lado olhando diretamente pra câmera, expressões misturando dúvida e expectativa, luz neutra de fim de cena, leve profundidade de campo. Still fotográfico realista estilo fotonovela/HQ, 16:9, sem texto legível. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão para cada um dos quatro. Espaço livre no topo e na base pra caixas de narração.`
 - **Continuidade**: pose de "grupo" de referência pra futuras aberturas/fechos do módulo 1.
 
+## 7-bis. ✅ PUBLICADO — texto final dos balões (corrigido em 2026-07-17)
+
+O roteiro acima (seção 7) é o PLANO original. Na publicação real, o Diego
+apontou que a sequência de diálogos ficava "sem pé nem cabeça" ao ler os
+balões isolados — porque cada quadro só comporta 1 balão, e algumas falas do
+plano dependiam de uma fala de OUTRO personagem no mesmo quadro (cortada) pra
+fazer sentido (ex.: a reação do Marcelo "EU SEI. MAS E SE ALGUÉM FALAR?" só
+fazia sentido depois da fala do Fernando sobre produção, que não coube no
+balão). O texto final publicado troca essas falas por versões autocontidas —
+cada balão precisa fazer sentido sozinho, sem depender de uma fala cortada de
+outro quadro:
+
+| Quadro | Tipo | Texto final publicado |
+|---|---|---|
+| 1 | narr | "Segunda-feira de manhã. Chega um pedido de duas linhas: \"coloca inteligência artificial no atendimento ao cliente\". Só isso — sem mais nenhum detalhe." |
+| 2 | fala (Fernando) | "Pedido vago desses sempre vira dor de cabeça depois. Marca minhas palavras." |
+| 3 | fala (Carol) | "Relaxa, Fernando! Já mandei pro agente: \"crie um chatbot inteligente\". Vamos ver o que ele traz!" |
+| 4 | pensamento (Rafa) | "\"Chatbot inteligente\"... inteligente como, exatamente? Será que só eu fiquei em dúvida?" |
+| 5 | narr | "Minutos depois, o agente devolveu uma proposta enorme: banco de dados, vários agentes especialistas, autenticação, integrações — tudo que ninguém tinha pedido." |
+| 6 | narr (era fala do Marcelo) | "Alguém mencionou a palavra \"produção\". O café de Marcelo não teve a mesma sorte." |
+| 7 | fala (Carol) | "Pergunta, Rafa. Sério — ninguém aqui sabe tudo." |
+| 8 | narr | "Ninguém definiu o problema. Ninguém decidiu o que era determinístico ou generativo. Ninguém combinou quem aprovaria a solução. Quando o agente entrega muita coisa, isso significa que a equipe avançou — ou que agora existem só mais decisões sem revisão?" |
+
+**Lição pro roteiro do fecho do Módulo 2 (e módulos futuros)**: escrever cada
+balão como uma unidade narrativa completa desde o início — nunca dividir uma
+troca de diálogo em duas falas que só fazem sentido juntas, já que cada
+quadro só tem 1 balão. Preferir narração pra conectar contexto entre quadros
+quando uma piada depender de uma fala anterior que não vai caber.
+
+Também corrigido: posição do balão nos quadros 1 e 5 (estavam sobre rosto de
+personagem — canto `tr`/`tl` em cima de gente em pé/sentada perto da borda;
+movidos pra `br`/`bl`, na área da mesa).
+
 ## 8. Prompts visuais mestre — 1 por personagem (uso em still solo/thumbnail)
 
 - **Fernando (mestre)**: `Retrato de still fotográfico realista de Fernando (SEMPRE O MESMO HOMEM: branco, 52 anos, robusto, óculos de leitura pendurados no pescoço por um cordão, cabelo grisalho curto e ralo no topo, polo azul-marinho, calça social cinza), segurando uma caneca branca surrada com os dizeres "Funciona na minha máquina", braços cruzados, expressão cética, ambiente de escritório de tecnologia fictício desfocado ao fundo, 16:9, sem texto legível além da caneca. ANATOMIA HUMANA CORRETA: dois braços, duas mãos, cinco dedos por mão.`
