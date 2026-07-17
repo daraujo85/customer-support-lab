@@ -30,3 +30,12 @@ def test_menu_text_lists_all_options():
     text = menu_text()
     for label in ["Suporte técnico", "Questões de faturamento", "Informações de conta", "Falar com um atendente"]:
         assert label in text
+
+
+def test_message_after_selected_option_ends_conversation():
+    session = Session(state=ChatState.SUPORTE_TECNICO)
+
+    reply = handle_input(session, "Meu computador não liga")
+
+    assert session.state == ChatState.ENCERRADO
+    assert "Obrigado pelo contato" in reply
