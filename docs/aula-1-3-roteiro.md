@@ -150,3 +150,118 @@ Imagem `art/esa/closing.png`, "Próxima aula: do codador ao orquestrador".
 - A saudação muda com o horário real da máquina no momento da gravação.
 - Comando de subir: `docker compose up --build`. Comando de teste (se for mostrar):
   `docker compose run --rm app python -m pytest` (não usar só `pytest`).
+
+## Artefatos prontos pra execução (só falta o áudio pra ancorar as cues)
+
+### `demo.sh` da cena 2 (terminal — Claude scaffold + docker up)
+
+```bash
+#!/usr/bin/env bash
+set -e
+export TERM=xterm-256color DOTNET_NOLOGO=1
+GREEN='\033[38;5;113m'; DIM='\033[38;5;245m'; RESET='\033[0m'; BOLD='\033[1m'
+prompt(){ printf "${GREEN}${BOLD}➜${RESET}  ${DIM}customer-support-lab${RESET} "; }
+run(){ local cmd="$1" c; prompt
+  for (( i=0; i<${#cmd}; i++ )); do c="${cmd:$i:1}"; printf '%s' "$c"; sleep 0.0$(( RANDOM % 6 + 4 ))
+    if (( RANDOM % 100 < 3 )); then sleep 0.$(( RANDOM % 3 + 2 )); fi; done
+  printf '\n'; sleep 0.35; eval "$cmd"; sleep 0.6; }
+
+source /demo/lib/shims.sh
+install_shim claude
+export CLAUDE_SHIM_MODE=scaffold
+
+clear; sleep 0.6
+mkdir -p /tmp/customer-support-lab && cd /tmp/customer-support-lab
+
+run 'claude "crie o baseline do laboratório: FastAPI servindo a página HTML com o fluxo determinístico (saudação por horário, menu fixo, árvore de decisão)"'
+sleep 1.0
+# docker compose up --build precisa de Docker-in-Docker ou de rodar fora do sandbox
+# do terminal-demo (ele já roda DENTRO de um container). Ver nota abaixo.
+prompt; sleep 2.0
+```
+
+**Nota sobre o `docker compose up --build` dentro do clipe**: o `terminal-demo` já
+roda o `demo.sh` DENTRO de um container (`garagem-term-sandbox`) — não tem Docker
+aninhado por padrão. Duas opções:
+1. Gravar essa parte (`docker compose up --build` + validação no navegador) como
+   um clipe SEPARADO, rodado no HOST de verdade (não no sandbox do terminal-demo) —
+   mais simples e já validado nesta sessão (funciona, porta 8010).
+2. Instalar Docker CLI + socket bind no sandbox (mais complexo, não recomendado só
+   pra esta aula).
+A opção 1 é a recomendada: dois clipes de terminal (um do shim do Claude, outro do
+`docker compose up --build` real no host), cortados juntos na cena 2.
+
+### `actions.json` da cena 3 (navegador — capturar-web)
+
+```json
+[
+  { "type": "wait", "ms": 1500 },
+  { "type": "click", "selector": "#input" },
+  { "type": "type", "selector": "#input", "text": "1" },
+  { "type": "wait", "ms": 400 },
+  { "type": "click", "selector": "button[type=submit]" },
+  { "type": "wait", "ms": 1800 }
+]
+```
+
+Comando (com `docker compose up --build` já rodando em outro terminal, no host):
+```bash
+node ~/.claude/skills/capturar-web/capweb.js \
+  --url http://localhost:8010 --out clip-chat.mp4 \
+  --seconds 6 --actions actions.json --width 1280 --height 720
+```
+
+### `scene.json` da cena 4a — `app/chat/state.py` (editor-demo)
+
+```json
+{
+  "title": "app/chat/state.py — customer-support-lab",
+  "repo": "customer-support-lab",
+  "file": "app/chat/state.py",
+  "lang": "python",
+  "explorer": ["app/main.py", "app/chat/flow.py", "app/chat/state.py", "Dockerfile"],
+  "active": "app/chat/state.py",
+  "base": "class ChatState(str, Enum):\n    GREETING = \"greeting\"\n    MAIN_MENU = \"main_menu\"\n    SUPORTE_TECNICO = \"suporte_tecnico\"\n    FINANCEIRO = \"financeiro\"\n    INFORMACOES_CONTA = \"informacoes_conta\"\n    HUMAN_HANDOFF = \"human_handoff\"\n    ENCERRADO = \"encerrado\"\n",
+  "typed": "",
+  "startDelayMs": 500,
+  "holdMs": 4000
+}
+```
+
+### `scene.json` da cena 4b — `app/chat/flow.py` (editor-demo)
+
+```json
+{
+  "title": "app/chat/flow.py — customer-support-lab",
+  "repo": "customer-support-lab",
+  "file": "app/chat/flow.py",
+  "lang": "python",
+  "explorer": ["app/main.py", "app/chat/flow.py", "app/chat/state.py", "Dockerfile"],
+  "active": "app/chat/flow.py",
+  "base": "def handle_input(session: Session, user_input: str) -> str:\n    user_input = user_input.strip()\n\n    if session.state == ChatState.GREETING:\n        session.state = ChatState.MAIN_MENU\n        return f\"{greeting()}\\n\\n{menu_text()}\"\n\n    if session.state == ChatState.MAIN_MENU:\n        option = next((o for o in MAIN_MENU if o.key == user_input), None)\n        if option is None:\n            return \"Não entendi. \" + menu_text()\n        session.state = option.next_state\n        return _FIXED_RESPONSES[option.next_state]\n\n    session.state = ChatState.ENCERRADO\n    return \"Obrigado pelo contato! Se precisar de algo mais, é só chamar de novo.\"\n",
+  "typed": "",
+  "startDelayMs": 500,
+  "holdMs": 5000
+}
+```
+
+Comando pra gerar os dois clipes:
+```bash
+bash ~/.claude/skills/editor-demo/render.sh scene-state.json clip-state.mp4
+bash ~/.claude/skills/editor-demo/render.sh scene-flow.json clip-flow.mp4
+```
+
+### Cena 5 — conteúdo dos slides (buildlib, quando o build_esa_m1a3.py existir)
+
+```python
+add(<ancora-estado-evento-transicao>, "estado, evento, transição", "", {"graphic": B.g_steps(
+    ["Estado", "Evento", "Transição", "Resposta fixa"])})
+```
+
+### Falta pra fechar esta aula
+- Áudio da narração (segs.json via `segs.py`).
+- Decidir se a validação no navegador (cena 3) usa `capturar-web` (screencast real,
+  como descrito acima) ou uma sequência de screenshots simples via `sips`/`cap.sh shot`
+  — mais barato, menos "vivo".
+- Confirmar os anchors reais assim que o texto da narração chegar (os nomes de cena
+  acima — "estado, evento, transição" etc. — são placeholders até lá).
