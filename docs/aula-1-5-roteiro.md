@@ -1,5 +1,15 @@
 # Aula 1.5 — Human in the Loop
 
+> ✅ PUBLICADA — vídeo gerado (24/24 cues, ~684s), legendas (CC) enviadas,
+> lesson `7c9d3fd0-0caa-4e32-add7-12fe2efba9d2`. Áudio:
+> `eng-sw-era-agents-m01-a05.mp3`. Shim estendido com 4 steps novos
+> (`sistema_resumo`, `matriz_autonomia`, `fluxo_10_etapas`,
+> `pontos_de_parada`) em `CLAUDE_SHIM_MODE=analysis`. 6 clipes reais (host)
+> via `.pipeline/esa/m1a5-*.sh` + `render_host.sh`. Montagem em
+> `.pipeline/build_esa_m1a5.py`. `g_compare` do `buildlib.py` ganhou badges
+> parametrizáveis (`lbadge`/`rbadge`/`mid`) pra reuso fora do contexto
+> atalho/ofício.
+
 ```text
 Branch: nenhuma
 Base: main
