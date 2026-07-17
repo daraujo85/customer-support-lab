@@ -3,8 +3,11 @@
 A partir da **Aula 1.4**, toda aula que alterar o laboratório segue este fluxo
 (decidido pelo Diego em 2026-07-17). A Aula 1.3 foi commitada direto na `main`
 (antes deste padrão existir) — o fim dela ficou marcado retroativamente com a tag
-`m01-a03-end`, sem uma tag `-start` correspondente (o repo nasceu já com o
-baseline completo, não há um "antes" pra marcar sem reescrever histórico).
+`m01-a03-end` e a branch `lesson/m01-a03-chatbot-deterministico` (apontando pro
+mesmo commit da `main` — é um marcador retroativo, não representa um fluxo
+isolado de verdade, já que o trabalho já tinha acontecido direto na `main`).
+Só aulas que efetivamente mexem no laboratório ganham branch/tag — aulas
+puramente conceituais (1.1, 1.2) não precisam.
 
 ## Por que branch + tag, não só branch solta
 
