@@ -29,7 +29,7 @@ config, documentação do laboratório) é que a aula ganha
 | 1.3 — Chatbot determinístico | criação do projeto | `lesson/m01-a03-chatbot-deterministico` |
 | 1.4 — Do codador ao orquestrador | leitura e análise do código existente | nenhuma |
 | 1.5 — Human in the Loop | análise dos pontos de aprovação | nenhuma |
-| 1.6 — Evolução da engenharia | referência à arquitetura | nenhuma |
+| 1.6 — Fundamentos que permanecem (DDD, testes, arquitetura, DevOps, SDD) | refatoração pequena e protegida por testes | `lesson/m01-a06-fundamentos-engenharia` |
 | 1.7 — O curso como prova do método | demonstração da esteira de produção | nenhuma |
 | 1.8 — Prova e reflexão | nenhuma evolução | nenhuma |
 
