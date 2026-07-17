@@ -1,16 +1,29 @@
 # Fluxo de git por aula — branch + tags
 
-A partir da próxima aula do curso que efetivamente mexer no laboratório
-(ver "Plano de branches do curso inteiro" abaixo — a primeira é a 2.1), toda
-aula nessas condições segue este fluxo (decidido pelo Diego em 2026-07-17).
+Toda aula que efetivamente mexer no laboratório segue este fluxo (decidido
+pelo Diego em 2026-07-17). "Mexer" inclui tanto uma evolução funcional nova
+quanto uma mudança pequena e reversível (ex.: adicionar um teste cobrindo
+comportamento já existente) — o critério não é o tamanho da mudança, é se
+algo no repo foi de fato commitado por causa da aula. Aulas puramente
+conceituais (sem nenhum commit) ficam de fora e não precisam de branch/tag.
+
 A Aula 1.3 foi commitada direto na `main` (antes deste padrão existir) — o fim
 dela ficou marcado retroativamente com a tag `m01-a03-end` e a branch
 `lesson/m01-a03-chatbot-deterministico` (apontando pro mesmo commit da `main` —
 é um marcador retroativo, não representa um fluxo isolado de verdade, já que o
 trabalho já tinha acontecido direto na `main`).
-Só aulas que efetivamente mexem no laboratório ganham branch/tag — aulas
-puramente conceituais (1.1, 1.2, 1.4, e todas as demais fora da tabela) não
-precisam.
+
+A Aula 1.4 — Do codador ao orquestrador — não é uma evolução funcional do
+laboratório (o chatbot determinístico já está pronto desde a 1.3); a aula usa
+o código existente pra demonstrar como conduzir um agente (contexto → plano →
+revisão → autorização → menor mudança → teste → diff), e o único artefato
+gerado é um teste cobrindo um comportamento que já existia e não tinha
+cobertura (encerramento da sessão num estado final). Mesmo sendo uma mudança
+mínima, ela seguiu o fluxo completo: `lesson/m01-a04-do-codador-ao-orquestrador`,
+tags `m01-a04-start`/`m01-a04-end`, já mergeada na `main`.
+
+A tabela em "Plano de branches do curso inteiro" (abaixo) lista as próximas
+aulas com evolução funcional de verdade — a partir dela, a primeira é a 2.1.
 
 ## Por que branch + tag, não só branch solta
 
