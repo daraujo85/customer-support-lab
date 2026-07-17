@@ -1,8 +1,27 @@
 # Roteiro técnico — Aula 1.3 "Laboratório: o chatbot determinístico"
 
-Sem áudio ainda (o Diego escreve o TTS no ChatGPT depois). Este documento é o
-material de apoio: exatamente o que vai aparecer na tela, na ordem, com os
-comandos/arquivos/linhas reais — pra narração casar com a demo sem inventar nada.
+**✅ PUBLICADA.** Áudio recebido (12min32s), vídeo montado e no ar
+(`build_esa_m1a3.py`, 30 cues, 755s). O que segue documenta o que foi
+efetivamente gravado/usado — útil de referência caso a aula seja refeita.
+
+- Terminal (sandbox, shim): `cd`/`pwd`/`git status` + Claude Code (shim scaffold,
+  modo `plan` depois `implement`) — clipes cortados de uma única gravação em
+  `.pipeline/esa/m1a3-terminal1.sh`.
+- Terminal (host, REAL): `docker compose up --build` e
+  `docker compose run --rm app python -m pytest -v` — `.pipeline/esa/m1a3-terminal-dockerup.sh`
+  e `m1a3-terminal-pytest.sh`, gravados via `.pipeline/esa/render_host.sh` (variante
+  do terminal-demo que grava direto no host, não no sandbox — necessário pra rodar
+  Docker de verdade).
+- Editor (Monaco real): `main.py`, `state.py`, `flow.py` (2 cenas: setup/menu e
+  `handle_input`), `index.html`, `app.js` — scene.json gerados via script Python,
+  clipes em `.pipeline/esa/clips/m1a3-scene-*.mp4`.
+- Navegador (real, `capturar-web`): saudação/menu + opções 1/2/3/4/9 (cada uma
+  como uma navegação NOVA — sessão fresca a cada teste, sem precisar de ação de
+  "refresh" separada).
+- Todos os 30 anchors bateram na primeira tentativa (exceto 1, corrigido — vírgula
+  no meio da frase quebrava o match substring do `find_time`).
+
+Abaixo, o roteiro ORIGINAL (pré-áudio) que orientou a produção:
 
 ## ⚠️ O projeto JÁ EXISTE — a aula não pode narrar "vamos criar agora"
 
