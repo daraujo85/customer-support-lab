@@ -4,6 +4,26 @@ Cole isto junto do prompt de narração. Ele resume TUDO que foi criado no proje
 `customer-support-lab`, incluindo os pontos onde a implementação real diverge (ou
 precisa ser mais específica) do que foi combinado no chat original.
 
+## ⚠️ Regra geral: o projeto JÁ EXISTE — não narrar como "criando agora"
+
+O repo já está criado, testado e publicado ANTES de qualquer aula ser gravada. Isso
+vale pra `customer-support-lab` inteiro, em qualquer módulo/aula futura, não só a
+1.3:
+
+- A demo em vídeo **finge** estar trabalhando ao vivo no projeto (pra fins
+  didáticos/narrativos), mas na real está **mostrando/revisando o que já existe**.
+- **Nunca** roteirizar "vamos criar o arquivo X agora" ou "vamos escrever isso do
+  zero" quando o arquivo já está commitado no repo — o aluno pode conferir o
+  histórico do GitHub e a contradição fica visível.
+- Cena de **editor** (Monaco): usar sempre `base` (conteúdo já pronto, exibido
+  instantaneamente) para código que já existe no repo. Só usar `typed` (animação de
+  digitação) para uma alteração NOVA e INCREMENTAL que a aula está genuinamente
+  introduzindo naquele momento (ex.: um módulo futuro adicionando uma função nova
+  em cima do que já existe).
+- Cena de **terminal**: comandos tipo `git clone` / `docker compose up` continuam
+  corretos (é a ação real de baixar/rodar um projeto existente) — o problema é só
+  fingir que o CONTEÚDO nasceu ali.
+
 ## Repositório
 
 - **URL pública**: `https://github.com/daraujo85/customer-support-lab`

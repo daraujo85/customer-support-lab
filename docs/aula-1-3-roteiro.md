@@ -4,6 +4,27 @@ Sem áudio ainda (o Diego escreve o TTS no ChatGPT depois). Este documento é o
 material de apoio: exatamente o que vai aparecer na tela, na ordem, com os
 comandos/arquivos/linhas reais — pra narração casar com a demo sem inventar nada.
 
+## ⚠️ O projeto JÁ EXISTE — a aula não pode narrar "vamos criar agora"
+
+O repo já está criado, commitado (2 commits) e publicado em
+`github.com/daraujo85/customer-support-lab` desde ANTES da gravação desta aula. Isso
+muda como a Aula 1.3 precisa ser contada:
+
+- **Não roteirizar** frases tipo "agora vamos criar o arquivo `state.py`" ou "vamos
+  escrever o menu do zero" como se o código estivesse nascendo ali, ao vivo — isso
+  contradiz o histórico real do repo (que o aluno pode abrir e conferir).
+- A cena de **terminal** (`git clone` + `docker compose up --build`) está correta
+  como está — clonar um repo que já existe é a ação real e coerente.
+- A cena de **editor** deve **EXIBIR o código já pronto** (usar o campo `base` do
+  `scene.json` do editor-demo, com `typed` vazio ou quase vazio) — **não** usar
+  `typed` pra simular que o arquivo está sendo digitado/criado na hora. A narração
+  correta é "aqui está o `state.py`" / "repara como o `flow.py` faz essa transição",
+  não "vamos digitar isso agora".
+- Se quiser um momento de "mão na massa" de verdade nesta aula, a opção coerente é
+  mostrar uma pequena alteração INCREMENTAL sobre o que já existe (ex.: adicionar um
+  comentário, rodar os testes, ou explorar o código navegando entre abas) — não
+  recriar a base do zero.
+
 ## Cenas, em ordem
 
 ### 1. Herói de abertura
@@ -49,7 +70,9 @@ Sequência exata de mensagens que vão aparecer na tela (bate com o código real
 
 ### 4. EDITOR (editor-demo, Monaco real) — mostrar a árvore de decisão
 
-Dois arquivos, nessa ordem (explorer mostrando os 4 arquivos do `app/`):
+**Exibir como código já pronto** (`base`, sem animação de digitação — ver aviso no
+topo do documento). Dois arquivos, nessa ordem (explorer mostrando os 4 arquivos do
+`app/`):
 
 **a) `app/chat/state.py`** — mostrar o enum inteiro (isso é o "estado" da máquina de
 estados citada na narração):
