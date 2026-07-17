@@ -6,24 +6,28 @@ comandos/arquivos/linhas reais — pra narração casar com a demo sem inventar 
 
 ## ⚠️ O projeto JÁ EXISTE — a aula não pode narrar "vamos criar agora"
 
-O repo já está criado, commitado (2 commits) e publicado em
+O repo já está criado, commitado e publicado em
 `github.com/daraujo85/customer-support-lab` desde ANTES da gravação desta aula. Isso
-muda como a Aula 1.3 precisa ser contada:
+muda como a Aula 1.3 precisa ser contada — mas a aula FALA de pedir pro Claude criar
+o projeto, então resolvemos assim:
 
-- **Não roteirizar** frases tipo "agora vamos criar o arquivo `state.py`" ou "vamos
-  escrever o menu do zero" como se o código estivesse nascendo ali, ao vivo — isso
-  contradiz o histórico real do repo (que o aluno pode abrir e conferir).
-- A cena de **terminal** (`git clone` + `docker compose up --build`) está correta
-  como está — clonar um repo que já existe é a ação real e coerente.
-- A cena de **editor** deve **EXIBIR o código já pronto** (usar o campo `base` do
-  `scene.json` do editor-demo, com `typed` vazio ou quase vazio) — **não** usar
-  `typed` pra simular que o arquivo está sendo digitado/criado na hora. A narração
-  correta é "aqui está o `state.py`" / "repara como o `flow.py` faz essa transição",
-  não "vamos digitar isso agora".
-- Se quiser um momento de "mão na massa" de verdade nesta aula, a opção coerente é
-  mostrar uma pequena alteração INCREMENTAL sobre o que já existe (ex.: adicionar um
-  comentário, rodar os testes, ou explorar o código navegando entre abas) — não
-  recriar a base do zero.
+- A cena de **terminal** mostra `claude "<prompt>"` criando o baseline — mas é um
+  **shim fake e determinístico** (`CLAUDE_SHIM_MODE=scaffold` no `terminal-demo`,
+  ver `garagem-claude-shim-scaffold` na memória), não o Claude Code de verdade.
+  Motivo: a conta configurada na máquina de gravação é do Prata Digital (trabalho),
+  não pode gerar conteúdo do curso pessoal; e o resultado precisa bater EXATAMENTE
+  com o repo já commitado (aulas seguintes citam nome de arquivo/texto exato). O
+  shim escreve os arquivos REAIS (idênticos ao repo) com a mesma cara de tool-call
+  do Claude Code (`⏺ Write(arquivo)` / `⎿ Wrote N lines`) — visualmente convincente,
+  testado ponta a ponta.
+- A narração PODE dizer "peça pro Claude criar o baseline" — é literalmente o que a
+  tela mostra (só que por trás é o shim, não a API real). Vale fechar mencionando
+  que o resultado já está publicado no GitHub pra quem quiser acompanhar/clonar (o
+  shim já imprime essa linha no final).
+- A cena de **editor**, mais adiante, deve **EXIBIR o código já pronto** (campo
+  `base` do `scene.json`, com `typed` vazio) — não digitar de novo o que o terminal
+  acabou de "criar". A narração aqui é "repara como o `state.py` ficou" / "o
+  `flow.py` faz essa transição assim", não "vamos digitar isso agora".
 
 ## Cenas, em ordem
 
@@ -31,19 +35,31 @@ muda como a Aula 1.3 precisa ser contada:
 Imagem `art/esa/welcome.png` (mesma do curso), kicker "aula 1.3 · módulo 1", título
 "Laboratório: o chatbot determinístico".
 
-### 2. TERMINAL — clonar e subir o projeto (terminal-demo, real)
-
-Comandos, na ordem (todos reais, rodam de verdade num sandbox com Docker):
+### 2. TERMINAL — Claude Code cria o baseline (terminal-demo, shim scaffold)
 
 ```bash
-git clone https://github.com/daraujo85/customer-support-lab
-cd customer-support-lab
-docker compose up --build
+claude "crie o baseline do laboratório: FastAPI servindo a página HTML com o fluxo
+determinístico (saudação por horário, menu fixo, árvore de decisão)"
 ```
 
-Output esperado: build da imagem (`python:3.12-slim` + pip install fastapi/uvicorn/
-pydantic/pytest/httpx — leva uns 15-20s), depois `Uvicorn running on http://0.0.0.0:8000`
-dentro do container (mapeado pra **`localhost:8010`** no host — ver `docs/tts-context.md`
+Com `install_shim claude` + `export CLAUDE_SHIM_MODE=scaffold` no `demo.sh` (ver
+memória `garagem-claude-shim-scaffold`). Output: sequência de `⏺ Write(arquivo)` /
+`⎿ Wrote N lines` pros 15 arquivos reais do projeto (pyproject.toml, .gitignore,
+app/chat/state.py, app/chat/flow.py, app/main.py, app/static/*, tests/test_chat_flow.py,
+Dockerfile, docker-compose.yml, docs/architecture.md, docs/course-roadmap.md,
+README.md — os dois `__init__.py` vazios são criados em silêncio), terminando com:
+
+```
+⏺ Baseline criado. Suba com docker compose up --build e abra
+  http://localhost:8010 pra validar.
+  Já está publicado no GitHub pra acompanhar: github.com/daraujo85/customer-support-lab
+```
+
+Na sequência, o terminal roda `docker compose up --build` de verdade (isso sim é
+real, sem shim — o sandbox tem Docker/Python de verdade). Output esperado: build da
+imagem (`python:3.12-slim` + pip install fastapi/uvicorn/pydantic/pytest/httpx —
+leva uns 15-20s), depois `Uvicorn running on http://0.0.0.0:8000` dentro do
+container (mapeado pra **`localhost:8010`** no host — ver `docs/tts-context.md`
 sobre por que não é 8000).
 
 ### 3. NAVEGADOR — validar o chatbot rodando (captura real de tela/browser)
@@ -124,8 +140,10 @@ Imagem `art/esa/closing.png`, "Próxima aula: do codador ao orquestrador".
 
 ## Coisas que a narração PRECISA saber pra não errar
 
-- Repo: `https://github.com/daraujo85/customer-support-lab` — se a aula pedir pra
-  clonar, é essa URL.
+- Repo: `https://github.com/daraujo85/customer-support-lab` — é a URL que o shim
+  cita no final; se a aula quiser reforçar "clone e acompanhe", é essa.
+- A cena de "Claude criando o projeto" usa o SHIM (fake, determinístico), não o
+  Claude Code real — ver aviso no topo do documento.
 - Porta real: **8010** (não 8000).
 - O texto do menu e das respostas fixas é EXATAMENTE o que está no código acima —
   se o roteiro parafrasear, a demo ao vivo não vai bater com a legenda/narração.
