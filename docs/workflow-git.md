@@ -44,13 +44,24 @@ commit novo ou ser apagada depois do merge; a tag não).
 
 ## Passo a passo por aula
 
-**1. Antes de gravar** — marca o estado inicial e abre a branch:
+**1. Antes de gravar** — a branch da aula sempre deriva do estado da aula
+anterior, não de um `main` genérico. Na prática, como cada aula termina com
+merge `--no-ff` na `main` (passo 3), a `main` pós-merge da aula anterior **é**
+o estado da aula anterior — então `git checkout main && git pull` continua
+sendo o comando certo, desde que seja feito logo após o merge/tag da aula
+anterior, sem outros commits não relacionados no meio. Se por algum motivo a
+`main` recebeu commits fora da sequência de aulas (ex.: docs, hotfix), derive
+explicitamente da tag de fim da aula anterior em vez de `main`:
 
 ```bash
-git checkout main && git pull
+git checkout m01-a04-end          # tag de fim da aula anterior — não "main" às cegas
 git tag m02-a01-start
 git checkout -b lesson/m02-a01-payload-conversacao
 ```
+
+O laboratório é uma linha do tempo contínua: cada aula evolui exatamente de
+onde a anterior parou (`m01-a03-end` → `m01-a04-end` → `m02-a01-end` → ...),
+nunca de um estado paralelo ou mais antigo.
 
 **2. Durante a gravação** — o Claude Code (real ou shim, conforme o caso — ver
 `docs/aula-1-3-roteiro.md` sobre quando usar shim) altera os arquivos nessa
