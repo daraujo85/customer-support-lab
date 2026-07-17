@@ -1,5 +1,12 @@
 # Aula 1.4 — Do codador ao orquestrador
 
+> ✅ PUBLICADA — vídeo gerado, legendas (CC) enviadas, lesson
+> `7b851ae9-d198-48ce-9afd-a0b25cf291cc`. Áudio: `eng-sw-era-agents-m01-a04.mp3`.
+> Terminal e conversa com o Claude Code gravados de verdade (host, shim
+> `CLAUDE_SHIM_MODE=analysis` — texto determinístico, sem escrever nada) via
+> `.pipeline/esa/m1a4-*.sh` + `render_host.sh`. Montagem em
+> `.pipeline/build_esa_m1a4.py`.
+
 ```text
 Branch: nenhuma
 Base: main
