@@ -73,10 +73,15 @@ customer-support-lab/
       app.js
       styles.css
   tests/
-    test_chat_flow.py        # 4 testes, todos passando
+    test_chat_flow.py        # 8 testes, todos passando (4 da Aula 1.3 + 4 da Aula 1.6)
   docs/
     architecture.md
     course-roadmap.md
+    workflow-git.md           # fluxo de branch+tag por aula + tabela de quais aulas alteram o repo
+    aula-1-3-roteiro.md       # registro do que foi de fato gravado, aula a aula
+    aula-1-4-roteiro.md
+    aula-1-5-roteiro.md
+    aula-1-6-roteiro.md
     tts-context.md            # este arquivo
   specs/                      # vazio (.gitkeep) — passa a receber Specs no Módulo 3
   skills/                     # vazio (.gitkeep)
@@ -107,6 +112,22 @@ customer-support-lab/
   estado de usuário/sessão/execução.
 - **Domínio 100% fictício**: atendimento ao cliente genérico. Nenhum dado de
   cliente ou negócio real.
+- **Desde a Aula 1.6**: a resolução da opção do menu não é mais uma busca
+  inline dentro de `handle_input` — foi extraída pra uma função de domínio
+  explícita `resolve_menu_option(user_input: str) -> MenuOption | None` em
+  `app/chat/flow.py`. Comportamento externo idêntico; só a estrutura interna
+  mudou (regra nomeada e testável isoladamente). Se o roteiro citar código de
+  `flow.py`, usar essa versão — não a busca inline antiga.
+
+## ⚠️ Quais aulas alteram o repositório (não assumir pelo número da aula)
+
+Nem toda aula com laboratório na tela **altera** o repositório. Regra e
+tabela completa (todos os módulos) em `docs/workflow-git.md` — **consultar
+esse arquivo antes de narrar qualquer branch/commit**, nunca assumir. Estado
+atual do Módulo 1: 1.1/1.2 conceituais (sem lab), 1.3 cria o baseline
+(commitado direto na `main`, antes do fluxo de branch existir), 1.4 e 1.5 são
+só leitura/análise (Claude Code não escreve nada, sem branch), 1.6 tem
+evolução real (`lesson/m01-a06-fundamentos-engenharia`, mergeada na `main`).
 
 ## Dependências e versões (se o roteiro for citar tecnologia por nome)
 
