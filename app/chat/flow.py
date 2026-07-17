@@ -50,6 +50,16 @@ def menu_text() -> str:
     return "Escolha uma opção:\n" + "\n".join(lines)
 
 
+def resolve_menu_option(user_input: str) -> MenuOption | None:
+    """Regra de domínio: resolve qual opção do menu corresponde à entrada
+    do usuário (ou None se não houver correspondência)."""
+    normalized_input = user_input.strip()
+    return next(
+        (option for option in MAIN_MENU if option.key == normalized_input),
+        None,
+    )
+
+
 def handle_input(session: Session, user_input: str) -> str:
     """Aplica UMA transição da árvore de decisão e devolve a resposta fixa.
 
@@ -63,7 +73,7 @@ def handle_input(session: Session, user_input: str) -> str:
         return f"{greeting()}\n\n{menu_text()}"
 
     if session.state == ChatState.MAIN_MENU:
-        option = next((o for o in MAIN_MENU if o.key == user_input), None)
+        option = resolve_menu_option(user_input)
         if option is None:
             return "Não entendi. " + menu_text()
         session.state = option.next_state
