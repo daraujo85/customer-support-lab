@@ -616,3 +616,65 @@ transições tipadas, fail-fast (máx. 2 tentativas) e handoff entre agentes
 especialistas (fecho). Lessons: abertura `e61cbb73-0374-4a8b-9f24-45c3c2e1ccde`,
 fecho `4edc0c58-0a8c-4155-be4d-4d0e9970d74c`. 16/16 quadros corretos na
 primeira tentativa (elenco, sem texto legível, sem balão desenhado).
+
+## 18. ✅ SÉRIE COMPLETA — Módulos 5 a 12 (2026-07-18, /goal "gerar até o final do curso")
+
+Concluída a produção de toda a fotonovela do curso. Cada módulo abaixo tem
+abertura + fecho (16 quadros), escritos juntos na mesma sessão (regra da
+seção 16), com o desafio novo do módulo introduzido na abertura e resolvido
+no fecho sem reabrir competências já aprendidas:
+
+- **M5 (Skills, Tools, MCPs)** — dar acesso livre ao banco vs. ferramenta de
+  contrato fechado. Abertura `428a497a-f3bf-40a0-98d9-4d77c148b5d3`, fecho
+  `ca730054-a47b-47a1-a24f-f00999126e2b`.
+- **M6 (Chatbot ao Agente Multimodal)** — bot duplicado por canal vs. canal
+  como só uma porta de entrada. Abertura `5a4f1123-dd71-4228-a804-46d799f6b7b4`,
+  fecho `c8def06e-8c34-43e4-9b25-6b27399889eb`.
+- **M7 (Arquitetura Agnóstica)** — sistema amarrado a um fornecedor vs.
+  provedor como detalhe de implementação. Abertura
+  `bb52230e-b9fe-4271-92ca-8ba5f7422fb8`, fecho
+  `a77a92ed-f962-4bb8-ac00-f676a8d1e41a`.
+- **M8 (Estudo de Caso Anonimizado)** — jogar tudo fora vs. evolução aditiva
+  do legado + voz mudando o problema. Mantém fotonovela mesmo sem branch de
+  lab (decisão do Diego). Abertura `f26a510e-7ceb-4658-bbbd-a7e5e26a1299`,
+  fecho `47034d26-f157-419a-9d7e-77d8ef608479`.
+- **M9 (Qualidade, Feedback, Observabilidade)** — erro silencioso por semanas
+  vs. tracing + avaliação contínua pegando em horas. Abertura
+  `ddd39950-433e-477b-b103-040f5e8d586e`, fecho
+  `96f8f6cf-b60b-4b50-94c8-b3b525ff5839`.
+- **M10 (Memória, Grafos, SLMs)** — agente redescobre tudo + fatura triplica
+  vs. memória persistente em grafo + SLM pra tarefa pequena. Abertura
+  `f2088f20-b74d-450e-8033-c32fa08e8b8a`, fecho
+  `c8924d28-aa63-40ef-9789-8ff0d60cafef`.
+- **M11 (Operação, Economia, Paralelo)** — paralelismo vira caos + síndrome
+  do impostor do Rafa vs. paralelismo controlado + papel humano reafirmado.
+  Abertura `3b12218f-88f5-404f-9633-a8ab318290af`, fecho
+  `1e03b9aa-f733-4a00-b1b4-cfbad6757ef4`.
+- **M12 (Síntese: Liderando Agentes) — FINALE** — não é mais um desafio
+  técnico novo: a liderança pede revisão ponta a ponta, o time olha pra trás
+  pro pedido vago da abertura do Módulo 1, e o fecho fecha a série inteira
+  com uma apresentação pra empresa (callback explícito ao M1) + retorno ao
+  escritório de sempre, luz dourada, tese final do curso. Abertura
+  `294af207-e2ed-4496-9097-aa9aac816f52`, fecho
+  `bebc9e2e-72dd-4d1a-ac11-a22ef1b03ec5`.
+
+**Total da série**: 12 módulos, 22 lessons de fotonovela (M1 com abertura+
+fecho originais da criação da bíblia, M2 com abertura preenchida
+retroativamente + fecho original, M3 só fecho — desafio único sem par de
+abertura/fecho —, M4 a M12 com abertura+fecho cada), 176 quadros no total.
+
+**Incidentes técnicos desta rodada** (nenhum bloqueou a produção):
+- Chamadas em background ao Gemini foram interrompidas (`killed`) várias
+  vezes no meio da geração de 16 quadros — causa não identificada com
+  certeza (suspeita: idle/sleep do sistema). Mitigado com
+  `.pipeline/retry_gen.sh`, que re-executa o mesmo `gen_fotonovela_mN.py`
+  em loop — como `buildlib.generate()` pula quadro já existente, retomar é
+  sempre seguro/idempotente.
+- Ocasionalmente o Gemini devolve a imagem em resolução menor (`800x446` em
+  vez do padrão `1024x572`), o que quebra o corte fixo do `delogo` (as
+  coordenadas da marca d'água não cabem na imagem menor). Fix: checar
+  dimensão antes do delogo e regenerar o quadro se vier fora do padrão.
+- Script `.pipeline/fotonovela_publish.py` (função `publish_fotonovela`) e
+  `.pipeline/fotonovela_captions.py` (legendas de M5 a M12) tornaram
+  reprodutível o resto da série — encerra as lições de bugs de bash/curl
+  registradas nas seções anteriores.
