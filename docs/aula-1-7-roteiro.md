@@ -78,7 +78,29 @@ tudo leitura de histórico e arquivos que já existem, sem Claude Code
 envolvido em nenhum ponto (não há pedido de análise nem implementação nesta
 aula, só demonstração direta do que já está no repo).
 
-## Pendente
+## ✅ Publicado
 
-Aguardando o áudio (`eng-sw-era-agents-m01-a07.mp3`) pra transcrever, mapear
-os cues aos anchors reais da narração e gravar os clipes definitivos.
+Áudio transcrito (`segs_m1a7.json`, 253 segmentos, ~830s). 31 cues montados
+em `build_esa_m1a7.py`, todos casados com âncoras reais da narração. Clipes
+gravados (real, host, mesmo padrão da 1.6 — `GIT_PAGER=cat`/`--no-pager`
+aplicado em todo comando de log/diff):
+
+- `m1a7-terminal-log` — `git status` · `fetch --all --tags` ·
+  `log --oneline --graph --decorate --all` · `tag --list "m01-*"`.
+- `m1a7-editor-workflow` / `-tts` / `-roadmap` / `-architecture` /
+  `-roteiros` — abre cada doc real (`base`, sem `typed`).
+- `m1a7-claude-analise` — shim `CLAUDE_SHIM_MODE=analysis
+  CLAUDE_SHIM_STEP=analisa_esteira`.
+- `m1a7-claude-metodo` — shim `CLAUDE_SHIM_STEP=metodo_9_etapas`.
+- `m1a7-terminal-diffs` — `log m01-a06-start..end --no-merges` · `diff`
+  completo.
+- `m1a7-terminal-pytest` — `docker compose run --rm app python -m pytest -v`
+  (8 testes).
+- `m1a7-terminal-up` + `m1a7-browser-app` (captura real via `capweb.js` em
+  `localhost:8010`) + `m1a7-terminal-down`.
+- `m1a7-claude-final` — shim `CLAUDE_SHIM_STEP=conteudo_vs_evidencia`.
+- `m1a7-terminal-final` — `git status` limpo, fechamento.
+
+Renderizado (32.6MB, ~830s), legendas geradas via
+`transcript_tools.py cc-payload`, upload + publish na lesson
+`074aa0a7-9457-4b1e-b317-54983ca1e9bc`.
