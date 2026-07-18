@@ -390,6 +390,40 @@ movidos pra `br`/`bl`, na área da mesa).
 - **Rafa**: começa em silêncio, quase pergunta e recua; termina com uma
   primeira fresta de coragem (a Carol o incentivou), mas ainda não perguntou de verdade.
 
+## 11-bis. ✅ PUBLICADO — Abertura do Módulo 2 (gap corrigido em 2026-07-18)
+
+Lesson `9a23a332-dc07-4470-84d8-522806d2dd42`, inserida logo após "O que
+realmente existe por trás de um chat" (1ª lesson do Módulo 2). Faltava desde
+a produção original — só o fecho do M2 existia. Desafio novo: mensagens
+livres do cliente em linguagem natural. Aplica o arco cumulativo: Rafa já
+pergunta antes de agir (aprendizado do M1), Fernando já se preocupa antes de
+reclamar, Marcelo já puxa o checklist do módulo anterior — mas nenhum deles
+ainda sabe o que fazer com histórico de conversa, papéis de mensagem ou
+janela de contexto (conteúdo específico do M2, ainda não ensinado). Termina
+em pergunta aberta, sem resolver — resolve no fecho já publicado (seção 12).
+
+Texto final dos 8 balões:
+
+| Quadro | Tipo | Texto |
+|---|---|---|
+| 1 | narr | "Nova solicitação chega: o chatbot precisa entender mensagens livres do cliente, não só números de menu. Desta vez, ninguém corre pro código sem perguntar antes — mas as perguntas certas ainda não são óbvias." |
+| 2 | fala (Rafa) | "Peraí — o agente vai lembrar de tudo que o cliente já disse na conversa, ou só da última mensagem? Isso muda a resposta, né?" |
+| 3 | narr | "Ninguém sabia responder. Carol resolveu na marra: colar a conversa inteira, palavra por palavra, em cada nova pergunta pro modelo." |
+| 4 | fala (Fernando) | "E se a conversa for longa? A gente vai mandar isso tudo pro modelo pra sempre? Tem limite nisso, ou não?" |
+| 5 | narr | "Marcelo puxou o checklist do módulo passado — objetivo, restrições, aprovação. Ajudou. Mas nenhuma pergunta dali explicava o que fazer com o histórico da conversa." |
+| 6 | fala (Carol) | "A gente já sabe separar o que é regra fixa do que é o modelo decidindo. Só não sabe onde a conversa mora entre uma mensagem e outra." |
+| 7 | fala (Rafa) | "Será que existe um jeito de guardar só o que importa da conversa, em vez de tudo?" |
+| 8 | narr | "O time já sabia perguntar antes de agir. Mas uma conversa com um modelo tem peças que ninguém tinha aberto ainda: papéis, memória, limite de contexto. Por onde começar?" |
+
+**Lição nova desta rodada**: 2 dos 8 quadros (q1, q3) precisaram de uma 2ª
+geração — o Gemini desenhou texto REALMENTE legível numa TV/tela na 1ª
+tentativa mesmo com o guard padrão, e o notebook da Carol saiu sem o
+adesivo de raio e com a tela virada pra câmera em vez de pra ela. Fix:
+reforçar o guard de texto pra ser explícito sobre "BORRADO E ILEGÍVEL, nunca
+palavras reais" (não só "sem texto legível"), e no prompt do notebook da
+Carol, dizer explicitamente "adesivo de raio bem visível na TAMPA de trás,
+voltada pra câmera" em vez de confiar só na persona canônica genérica.
+
 ## 12. ✅ PUBLICADO — Fecho do Módulo 2
 
 Lesson `745421e7-ed23-4342-abbe-851434451c88` ("Fotonovela: O Escritório dos
