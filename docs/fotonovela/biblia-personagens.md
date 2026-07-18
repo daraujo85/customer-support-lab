@@ -21,6 +21,46 @@ nunca em humilhação. Competência não é saber tudo — é saber investigar,
 formular problemas, usar ferramentas com responsabilidade, pedir ajuda,
 aprender e assumir responsabilidade pelas decisões.
 
+### ⚠️ Regra estrutural (decidida com o Diego em 2026-07-18): arco CUMULATIVO, não reset
+
+A cada módulo, o time enfrenta um problema **novo** que eles ainda **não
+sabem resolver** — específico do conteúdo daquele módulo, que ainda não foi
+ensinado. Isso NÃO muda: toda abertura de módulo tem um desafio genuinamente
+desconhecido pra eles, senão a história perde a tensão dramática. O que
+muda — e precisa ficar visível — é que **o aprendizado dos módulos
+anteriores já grudou**: eles não repetem os erros básicos que já cometeram
+antes, mesmo diante de um problema novo que ainda não sabem resolver.
+
+Ou seja: a curva de "quantidade de gafe" cai a cada módulo, mesmo que a
+curva de "desafio novo, ainda sem solução" permaneça alta em toda abertura.
+Nunca resetar os personagens pra estaca zero — cada abertura já parte do
+patamar de maturidade que o fecho do módulo anterior deixou.
+
+**Exemplo concreto já aplicado** (abertura M1 → fecho M1 → abertura M2 →
+fecho M2): na abertura do Módulo 1, ninguém questiona o pedido vago, Carol
+já sai escrevendo "crie um chatbot inteligente" sem pensar, Rafa nem
+tenta perguntar. No fecho do Módulo 1 (ainda não produzido — só a abertura e
+o fecho do M2 existem hoje) essas falhas específicas de M1 (Human in the
+Loop, orquestração, fundamentos) deveriam já aparecer corrigidas. Na
+ABERTURA do Módulo 2, o problema é NOVO (mensagens livres em linguagem
+natural — algo que M1 não ensinou), mas olhando o que produzimos pro FECHO
+do M2, dava pra ver que Rafa já pergunta primeiro, Fernando já pensa em
+fallback, Carol já se autocorrige antes de pedir "faça tudo" — prova de
+que o aprendizado de M1 (e do próprio M2) gruda e comparece.
+
+**Como aplicar em cada módulo futuro (3 a 12, pulando o 8)**:
+1. Definir o desafio NOVO do módulo (algo que só o conteúdo daquele módulo resolve).
+2. Escrever a ABERTURA mostrando esse desafio novo confundindo o time — MAS
+   sem reintroduzir erros que módulos anteriores já corrigiram (ex.: a
+   partir do Módulo 2, Rafa não volta a ficar em silêncio total; a partir do
+   Módulo 6, ninguém widget mais um pedido sem objetivo/restrição/critério).
+3. Escrever o FECHO mostrando o desafio resolvido com o método do módulo,
+   E deixando pistas de que os aprendizados anteriores continuam presentes
+   (pequenos gestos, falas, hábitos que já viraram natural pro personagem).
+4. Cada personagem tem seu PRÓPRIO arco de maturidade (seção "arco emocional"
+   de cada fotonovela) que só cresce — nunca regride sem motivo dramático
+   explícito.
+
 ## 3. Bíblia dos 4 personagens
 
 ### Personagem 1 — Fernando Costa Villela ("Fê")
