@@ -753,3 +753,47 @@ ao trocar de aula). **Pendente**: aplicar os cues retroativamente nas 24
 lessons de fotonovela já publicadas (nenhuma tem `soundCue`/`ambient`
 setado ainda) — fazer isso só depois que o Diego confirmar que terminou de
 mandar os sons, pra não ter que repassar tudo de novo.
+
+## 20. ✅ APLICADO — Cues sonoros retroativos (2026-07-18)
+
+Deploy feito (migration `SlideSoundCues` rodou em produção, frontend com o
+player de áudio publicado) e os 44 cues abaixo aplicados nas 24 lessons de
+fotonovela já existentes, sem tocar em legenda/balão (script
+`/tmp/apply_cues.py`, descartável — usa `fotonovela_publish.update_slide`
+lendo o valor atual de cada slide antes de gravar, pra não sobrescrever
+nada):
+
+- **`tension`** no quadro 1 de 11 das 12 aberturas (todas exceto M12 —
+  a abertura do M12 é retrospectiva/reflexiva, não um problema-surpresa
+  chegando, então não teria o mesmo efeito).
+- **`comedy`** nos 5 quadros onde a Carol propõe um atalho ingênuo
+  identificável (M1 abertura q3, M4/M5/M6/M8 abertura q2).
+- **`gameover`** só na M4 abertura q3 (única com "funcionou na primeira,
+  falhou na segunda" narrado explicitamente).
+- **`heartbeat`** em 3 quadros de nervosismo genuíno (M9 abertura q2 —
+  Fernando alarmado; M11 abertura q3 — síndrome do impostor do Rafa; M12
+  abertura q3 — "dá um friozinho na barriga").
+- **`printer`** só na M3 fecho q5 (spec organizada em camadas — único
+  quadro com um documento/artefato central na cena).
+- **`triumph`** no quadro da virada de 11 dos 12 fechos (o momento em que
+  alguém declara a solução certa) — **M12 fecho não recebeu triumph**
+  porque não é uma virada técnica nova, é uma síntese retrospectiva.
+- **`applause`** no quadro final de 11 fechos (M1 a M11) — tratado como
+  sting de encerramento não-diegético (mesmo quando o texto narra "ninguém
+  comemorou X", o áudio marca o fim do episódio pro espectador, não uma
+  comemoração literal dos personagens). **M12 fecho é o único caso onde o
+  aplauso é literal na história** ("a sala aplaudiu") — por isso foi
+  aplicado no quadro 7 (auditório), não no quadro 8 final (volta ao
+  escritório, sem cue).
+
+**Deliberadamente NÃO aplicado nesta rodada** (evitar forçar cue sem
+cena que sustente): `door-open`/`door-close` (nenhum roteiro publicado até
+aqui descreve literalmente uma porta abrindo/fechando) e `boo` (nenhuma
+cena de reprovação coletiva explícita). Ficam disponíveis pra roteiros
+futuros (Módulos 13+, se houver, ou re-roteirização) onde a cena realmente
+pedir.
+
+**Ambient**: nenhum slide recebeu `ambient=rain` — todas as cenas
+publicadas até aqui são no escritório fictício (default `office` implícito
+já cobre 100% do conteúdo existente). `rain` fica disponível pra uma cena
+futura que saia do escritório ou tenha clima mais sóbrio.
