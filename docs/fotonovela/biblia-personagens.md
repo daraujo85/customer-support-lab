@@ -692,3 +692,64 @@ segue o mesmo padrão de todos os outros.
   `.pipeline/fotonovela_captions.py` (legendas de M5 a M12) tornaram
   reprodutível o resto da série — encerra as lições de bugs de bash/curl
   registradas nas seções anteriores.
+
+## 19. 🔊 Paleta de cues sonoros (feature em andamento, 2026-07-18)
+
+A fotonovela ganhou som: cada slide tem dois campos opcionais no banco
+(`LessonSlide.SoundCue`, `LessonSlide.Ambient`), setáveis via `PUT
+/api/admin/slides/{id}` (`soundCue`, `ambient`) ou via
+`.pipeline/fotonovela_publish.py` (`update_slide(..., sound_cue=, ambient=)`
+ou a 5ª/6ª posição da tupla de `captions`). **O roteirista (eu) escolhe o
+cue por cena ao planejar o roteiro — não existe inferência automática por
+posição do quadro** (ex.: NÃO assumir "1º quadro = tension" ou "último
+quadro = applause" sem checar se faz sentido pra aquela cena específica).
+
+### Cues PONTUAIS (`SoundCue`, tocam uma vez)
+
+Aceita 1 cue ou vários em SEQUÊNCIA separados por vírgula, tocados em ordem
+(ex.: `"door-open,tension"` — a porta abre, depois a tensão do pedido
+chegando). Cues disponíveis:
+
+| Cue | Uso |
+|---|---|
+| `tension` | Pedido/demanda chegando, time desesperado — tipicamente o 1º quadro de uma ABERTURA (não do fecho). |
+| `comedy` | Ideia atrapalhada/atalho ingênuo sendo proposto (bateria de pastelão) — historicamente a Carol propondo um "jeito fácil" que não é. |
+| `triumph` | Acha a solução certa, vira o jogo — geralmente no meio do FECHO, quando alguém propõe a abordagem certa. |
+| `gameover` | Não deu certo, tentativa fracassada. |
+| `heartbeat` | Alguém muito nervoso/ansioso (batimento acelerado). |
+| `printer` | Documento/plano/spec sendo impresso. |
+| `door-open` / `door-close` | Entrada/saída de cena, alguém chegando ou saindo. |
+| `boo` | Vaia — reação negativa/reprovação de um grupo. |
+| `applause` | Quadro final, grupo reunido, fechamento celebratório. |
+
+### Ambientes CONTÍNUOS (`Ambient`, loop de fundo baixo)
+
+"Gruda" nos quadros seguintes até outro slide definir um valor diferente —
+não precisa repetir em todo quadro, só no ponto onde muda:
+
+| Ambient | Uso |
+|---|---|
+| `office` | Murmúrio de escritório — default implícito (nulo = office). |
+| `rain` | Cena mais sóbria/dramática, fora do escritório ou clima pesado. |
+
+### Arquivos de áudio
+
+`frontend/public/audio/{nome}.mp3` — um arquivo por cue/ambient (nome do
+arquivo = nome do cue, com `office` mapeado pra `office-ambient.mp3`). Todos
+passados por `ffmpeg loudnorm` + fade-in curto na integração. Lista atual:
+tension, comedy, triumph, gameover, heartbeat, printer, door-open,
+door-close, boo, applause, office-ambient, rain — **lista viva, o Diego
+ainda está mandando mais sons; sempre conferir o diretório antes de assumir
+que a lista acima é definitiva.**
+
+### Player (frontend)
+
+`lesson.ts`: `<audio #slidesAmbientAudio loop>` (ambiente, volume 0.12,
+troca de faixa via `effectiveAmbient()` — computed que olha pra trás no
+array de slides até achar o `Ambient` não-nulo mais recente) + `<audio
+#slidesCueAudio>` (fila de cues, toca em sequência via evento `(ended)`,
+volume 0.85). Dispara 1x por slide (chave `lessonId:slideIndex`, resetada
+ao trocar de aula). **Pendente**: aplicar os cues retroativamente nas 24
+lessons de fotonovela já publicadas (nenhuma tem `soundCue`/`ambient`
+setado ainda) — fazer isso só depois que o Diego confirmar que terminou de
+mandar os sons, pra não ter que repassar tudo de novo.
