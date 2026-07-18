@@ -433,3 +433,33 @@ prompt se sair errado (aconteceu 3x nesta rodada, todas resolvidas na
 4. Conferir TODOS os quadros de grupo visualmente antes de subir — a taxa
    de erro em cenas de grupo é alta o suficiente (nesta rodada: 3/8) pra
    nunca pular essa checagem.
+5. Posição de balão: corners de TOPO (`tl`/`tr`) frequentemente cobrem rosto
+   quando os personagens estão em pé (cabeça chega perto da borda superior
+   do quadro 16:9). Preferir corners de BAIXO (`bl`/`br`, área de mesa/chão)
+   como ponto de partida — regenerar/reposicionar visualmente depois se
+   ainda cobrir algo.
+
+## 14. ✅ PUBLICADO — Fecho do Módulo 1
+
+Lesson `a8b94eac-8a4e-473e-972f-f45f6b07b90f` ("Fotonovela: O Escritório dos
+Agentes (fecho)"), inserida no fim do Módulo 1 (antes de "Prova e reflexão do
+módulo"). Resolve exatamente a cena em aberto na abertura do M1: o mesmo
+pedido vago volta à mesa, mas agora conduzido com método — Marcelo organiza
+objetivo/restrições/aprovação, Fernando revisa o plano antes de qualquer
+código (construtivo, não mais só cético), Rafa finalmente faz a pergunta que
+não fez na abertura ("o que exatamente esse chatbot precisa resolver?"),
+silêncio reflexivo quando percebem que ninguém tinha respondido isso antes,
+Carol pede a menor mudança com contexto/limite/plano em vez de "crie um
+chatbot inteligente", o agente devolve algo pequeno e revisável, o time
+aprova sabendo o que está aprovando. Fecha com a tese de HITL: não é
+desconfiar do agente, é saber onde a decisão continua sendo humana.
+
+Todos os 8 quadros saíram corretos na primeira tentativa (validação da lição
+#3 acima — repetir a descrição completa de cada personagem em toda cena de
+grupo eliminou o problema de elenco genérico que apareceu 3x no fecho do
+Módulo 2). Balões todos posicionados em cantos inferiores (`bl`/`br`) desde
+o início — nenhuma correção de posição necessária (validação da lição #5).
+
+Com isso, a base narrativa do Módulo 1 e do Módulo 2 está completa (abertura
++ fecho dos dois). Próximo: Módulo 3 (Spec Driven Development) em diante,
+seguindo a regra do arco cumulativo (seção 2).
