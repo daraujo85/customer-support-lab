@@ -658,10 +658,24 @@ no fecho sem reabrir competências já aprendidas:
   `294af207-e2ed-4496-9097-aa9aac816f52`, fecho
   `bebc9e2e-72dd-4d1a-ac11-a22ef1b03ec5`.
 
-**Total da série**: 12 módulos, 22 lessons de fotonovela (M1 com abertura+
-fecho originais da criação da bíblia, M2 com abertura preenchida
-retroativamente + fecho original, M3 só fecho — desafio único sem par de
-abertura/fecho —, M4 a M12 com abertura+fecho cada), 176 quadros no total.
+**Total da série**: 12 módulos, 24 lessons de fotonovela — TODOS com
+abertura + fecho (M1 e M2 originais + gaps preenchidos retroativamente,
+M4-M12 escritos abertura+fecho juntos desde o início), 192 quadros no
+total.
+
+### ⚠️ Gap do Módulo 3 corrigido (2026-07-18, reportado pelo Diego: "M3 só tem uma novela")
+
+O Módulo 3 tinha sido produzido ANTES da regra de sempre gerar abertura+
+fecho juntos — só existia uma lesson com 8 quadros que já misturava
+descoberta do problema (q1-q4) e resolução (q5-q8) na mesma peça, igual ao
+padrão antigo (errado) de "uma fotonovela por módulo". Corrigido sem
+regenerar as imagens antigas: os 8 quadros existentes viraram o FECHO
+(`5ed7355c-9326-4821-9b3c-4e2a7fceff9f`, legendas reescritas via `PUT` pra
+funcionar só como resolução — "a mesma solicitação... volta à mesa"), e uma
+ABERTURA nova de 8 quadros foi gerada do zero
+(`3ada2688-21ac-463d-abbe-b8536b74e653`) com o problema (specs não
+versionadas) terminando em pergunta aberta, sem resolução. Módulo 3 agora
+segue o mesmo padrão de todos os outros.
 
 **Incidentes técnicos desta rodada** (nenhum bloqueou a produção):
 - Chamadas em background ao Gemini foram interrompidas (`killed`) várias
