@@ -337,5 +337,59 @@ movidos pra `br`/`bl`, na área da mesa).
 - **Rafa**: começa em silêncio, quase pergunta e recua; termina com uma
   primeira fresta de coragem (a Carol o incentivou), mas ainda não perguntou de verdade.
 
-*(Arco de Módulo 2 fica para quando produzirmos o fecho correspondente —
-escopo desta rodada é só a abertura do Módulo 1, por instrução do Diego.)*
+## 12. ✅ PUBLICADO — Fecho do Módulo 2
+
+Lesson `745421e7-ed23-4342-abbe-851434451c88` ("Fotonovela: O Escritório dos
+Agentes (fecho)"), inserida no fim do Módulo 2 (depois de "Primeira evolução
+generativa"). Situação: chega um pedido parecido com o da abertura do
+Módulo 1 ("o chatbot precisa entender mensagens livres dos clientes"), mas
+agora conduzido com método — Rafa é o primeiro a perguntar o que continua
+determinístico x generativo; Fernando identifica risco de fallback; Carol
+quase escreve "faça tudo" pro agente e se autocorrige; Marcelo revela um
+checklist (objetivo, critérios de aceite, riscos, testes, evidências,
+aprovação); o agente devolve um plano pequeno e testável; a equipe celebra
+clareza, não volume de código.
+
+Texto final dos 8 balões (já escritos autocontidos desde o início, aplicando
+a lição da abertura do Módulo 1):
+
+| Quadro | Tipo | Texto |
+|---|---|---|
+| 1 | narr | "Nova solicitação chega: \"o chatbot precisa entender mensagens livres dos clientes\". Desta vez, ninguém corre pro código primeiro." |
+| 2 | fala (Rafa) | "Antes de mexer em qualquer coisa: o que precisa continuar determinístico, e o que já pode ser gerado pelo modelo?" |
+| 3 | fala (Fernando) | "Boa pergunta. E o que acontece quando o modelo não tiver confiança na resposta? Precisamos de um fallback certo." |
+| 4 | narr | "Carol quase digitou \"faça tudo\" pro agente. Parou. Apagou. Recomeçou com objetivo, contexto e limites." |
+| 5 | fala (Marcelo) | "Objetivo, critérios de aceite, riscos, testes, evidências, ponto de aprovação. Ninguém entra em produção sem isso." |
+| 6 | narr | "Juntos, mapearam o que pertence à sessão, o que pertence ao usuário, quando resumir a conversa e como sempre voltar pro menu determinístico se o modelo falhar." |
+| 7 | fala (Carol) | "O agente devolveu um plano pequeno, claro e testável. Nem parece a mesma Carol de duas aulas atrás, hein?" |
+| 8 | narr | "Ninguém comemorou o tanto de código. Comemoraram o comportamento ficar compreensível, limitado e testável. Entender uma conversa não serve só pra conversar melhor com uma LLM — serve pra projetar sistemas em que contexto, estado, regras e geração têm responsabilidades claras." |
+
+### ⚠️ Problema recorrente encontrado nesta rodada: elenco "derrapa" em cenas de grupo
+
+Ao gerar quadros com os 4 personagens juntos (ou pares menos comuns, como
+Fernando+Rafa), o Gemini com frequência **ignora a persona canônica e insere
+gente genérica** — aconteceu em 3 dos 8 quadros desta fotonovela (q3, q5,
+q6/q8 nas primeiras tentativas). Sintoma: cenas de grupo/prompt mais longo
+"diluem" a atenção do modelo às descrições de cada personagem.
+
+**Mitigação que funcionou**: no PROMPT de qualquer quadro com 2+
+personagens, repetir a descrição completa (`SEMPRE O MESMO HOMEM/A MESMA
+MULHER: ...`) de CADA personagem presente, mesmo que pareça redundante —
+nunca abreviar pra só o nome ou "mesma aparência de sempre" depois da
+primeira menção em quadros de grupo. Frames com 1 pessoa só raramente têm
+esse problema; quanto mais gente no quadro, maior o risco — vale gerar e
+CONFERIR cada quadro de grupo antes de seguir, e regenerar sem economia de
+prompt se sair errado (aconteceu 3x nesta rodada, todas resolvidas na
+2ª tentativa com o prompt completo).
+
+## 13. Lições consolidadas pra próximos módulos
+
+1. Cada balão precisa fazer sentido sozinho (seção 7-bis).
+2. Balão não pode ser desenhado dentro da imagem pelo Gemini — reforçar
+   explicitamente "NÃO desenhe balão/nuvem/texto" no prompt sempre, não só
+   quando der errado.
+3. Em quadros de grupo (2+ personagens), sempre repetir a descrição
+   completa de cada um no prompt — nunca abreviar.
+4. Conferir TODOS os quadros de grupo visualmente antes de subir — a taxa
+   de erro em cenas de grupo é alta o suficiente (nesta rodada: 3/8) pra
+   nunca pular essa checagem.
