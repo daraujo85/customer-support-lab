@@ -415,14 +415,45 @@ Texto final dos 8 balões:
 | 7 | fala (Rafa) | "Será que existe um jeito de guardar só o que importa da conversa, em vez de tudo?" |
 | 8 | narr | "O time já sabia perguntar antes de agir. Mas uma conversa com um modelo tem peças que ninguém tinha aberto ainda: papéis, memória, limite de contexto. Por onde começar?" |
 
-**Lição nova desta rodada**: 2 dos 8 quadros (q1, q3) precisaram de uma 2ª
-geração — o Gemini desenhou texto REALMENTE legível numa TV/tela na 1ª
-tentativa mesmo com o guard padrão, e o notebook da Carol saiu sem o
+**Lição nova desta rodada (visual)**: 2 dos 8 quadros (q1, q3) precisaram de
+uma 2ª geração — o Gemini desenhou texto REALMENTE legível numa TV/tela na
+1ª tentativa mesmo com o guard padrão, e o notebook da Carol saiu sem o
 adesivo de raio e com a tela virada pra câmera em vez de pra ela. Fix:
 reforçar o guard de texto pra ser explícito sobre "BORRADO E ILEGÍVEL, nunca
 palavras reais" (não só "sem texto legível"), e no prompt do notebook da
 Carol, dizer explicitamente "adesivo de raio bem visível na TAMPA de trás,
 voltada pra câmera" em vez de confiar só na persona canônica genérica.
+
+### ⚠️ Bug de CONTINUIDADE NARRATIVA descoberto (2026-07-18, reportado pelo Diego)
+
+Ao produzir esta abertura DEPOIS do fecho do M2 já estar publicado (ordem de
+produção historicamente invertida — fecho existia desde antes, a abertura só
+foi criada agora pra preencher o gap), o roteiro do fecho **reabria uma
+pergunta que a própria abertura já tinha resolvido**: o fecho começava
+perguntando "o que precisa continuar determinístico e o que já pode ser
+gerado?" como se fosse a primeira vez — mas a ABERTURA já termina com Carol
+dizendo "a gente já sabe separar regra fixa de modelo decidindo". Além
+disso, os quadros 1 de abertura e fecho abriam com frases quase idênticas
+("nova solicitação chega: o chatbot precisa entender mensagens livres..."),
+lendo como um reset em vez de uma continuação — foi isso que o Diego notou
+como "parece estar regredindo".
+
+**Fix aplicado** (só texto de balão via `PUT`, sem regenerar imagem): os 3
+primeiros balões do FECHO foram reescritos pra resolver EXATAMENTE a
+pergunta que a abertura deixou em aberto (papéis de mensagem, memória,
+janela de contexto — não mais determinístico-vs-generativo, que a abertura
+já tinha resolvido) e pra referenciar explicitamente que é "a mesma
+solicitação" voltando à mesa, não uma nova.
+
+**Regra pra daqui pra frente**: SEMPRE escrever a abertura e o fecho do MESMO
+módulo JUNTOS, na mesma sessão de trabalho — nunca um well depois do outro
+com dias/produções de diferença. Se a ordem de produção for invertida por
+qualquer motivo (ex.: preenchendo um gap), reler o outro lado (abertura↔
+fecho) ANTES de escrever, e conferir explicitamente: (1) o fecho resolve a
+pergunta EXATA que a abertura deixou aberta, não uma pergunta genérica
+parecida; (2) nenhum dos dois reabre uma competência que o outro lado (ou um
+módulo anterior) já tinha resolvido; (3) a frase de gatilho do fecho
+referencia a abertura como continuação, nunca como incidente novo.
 
 ## 12. ✅ PUBLICADO — Fecho do Módulo 2
 
