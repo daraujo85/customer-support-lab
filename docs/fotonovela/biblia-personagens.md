@@ -48,7 +48,20 @@ do M2, dava pra ver que Rafa já pergunta primeiro, Fernando já pensa em
 fallback, Carol já se autocorrige antes de pedir "faça tudo" — prova de
 que o aprendizado de M1 (e do próprio M2) gruda e comparece.
 
-**Como aplicar em cada módulo futuro (3 a 12, pulando o 8)**:
+**Decisão 2026-07-18: o Módulo 8 NÃO pula a fotonovela.** Mesmo sendo o
+estudo de caso anonimizado (sem branch de laboratório), a fotonovela é
+narrativa/motivacional e independe de o módulo ter evolução real de código —
+todos os módulos de 2 a 12 ganham fotonovela, sem exceção.
+
+**Padrão de volume: TODO módulo (2 a 12) ganha ABERTURA e FECHO**, os dois
+uma lesson Slides de 8 quadros cada — mesmo padrão do Módulo 1. A abertura
+entra logo no início do módulo (depois da 1ª lesson conceitual), o fecho
+entra como penúltima lesson (antes da prova/lesson final). Gap conhecido
+corrigido em 2026-07-18: o Módulo 2 tinha só o FECHO publicado — faltava a
+ABERTURA (o desafio "mensagens livres em linguagem natural" nunca foi
+mostrado dando errado ANTES do conteúdo do módulo, só resolvido depois).
+
+**Como aplicar em cada módulo futuro (3 a 12)**:
 1. Definir o desafio NOVO do módulo (algo que só o conteúdo daquele módulo resolve).
 2. Escrever a ABERTURA mostrando esse desafio novo confundindo o time — MAS
    sem reintroduzir erros que módulos anteriores já corrigiram (ex.: a
@@ -463,3 +476,46 @@ o início — nenhuma correção de posição necessária (validação da liçã
 Com isso, a base narrativa do Módulo 1 e do Módulo 2 está completa (abertura
 + fecho dos dois). Próximo: Módulo 3 (Spec Driven Development) em diante,
 seguindo a regra do arco cumulativo (seção 2).
+
+## 15. ✅ PUBLICADO — Fotonovela do Módulo 3 (Spec Driven Development)
+
+**Desafio novo do módulo**: até aqui o time já aprendeu a perguntar antes de
+agir (M1) e a separar determinístico de generativo (M2) — mas ninguém ainda
+guarda a intenção aprovada em lugar nenhum. Cada prompt nasce, funciona uma
+vez, e some. Sem versionamento, sem reprodutibilidade, sem contexto em
+camadas.
+
+Texto final dos 8 balões:
+
+| Quadro | Tipo | Texto |
+|---|---|---|
+| 1 | narr | "Um card de tarefa chega: \"implementar handoff pro atendimento humano quando o cliente pede\". Desta vez, o time já pergunta o que é determinístico e o que é generativo antes de tocar em código." |
+| 2 | fala (Fernando) | "Beleza, mas cadê o texto que a gente aprovou pro agente executar ontem? Porque hoje ninguém lembra por quê funcionou." |
+| 3 | narr | "Carol procura o prompt de ontem. Encontra três versões diferentes, escritas direto no chat — nenhuma salva em lugar nenhum." |
+| 4 | fala (Marcelo) | "A gente aprendeu a perguntar a coisa certa. Mas não aprendeu a guardar a resposta. Isso não escala." |
+| 5 | narr | "Foi aí que pararam de reescrever o pedido do zero toda vez — e começaram a tratar a intenção aprovada como um artefato: uma Spec." |
+| 6 | fala (Rafa) | "Se a spec fica versionada junto com o código, da próxima vez a gente sabe exatamente o que mudou e por quê." |
+| 7 | narr | "No lugar de um prompt gigante e solto, entraram camadas: regra do domínio primeiro, restrição do sistema depois, e só então o pedido específico da tarefa." |
+| 8 | narr | "A spec não deixou o trabalho mais lento. Deixou reproduzível — a próxima pessoa, ou o próximo agente, não precisa mais adivinhar o que já tinha sido decidido." |
+
+Lesson `5ed7355c-9326-4821-9b3c-4e2a7fceff9f`, inserida como penúltima do
+Módulo 3 (antes de "Prova e laboratório do módulo"). Todos os 8 quadros
+saíram corretos na primeira tentativa (elenco reconhecível em todas as
+cenas de grupo, sem balão desenhado, sem anatomia deformada). Balões
+alternando `br`/`bl` desde o início — nenhuma correção de posição
+necessária.
+
+**⚠️ Bug de upload descoberto nesta rodada**: ao fazer upload em lote dos 8
+slides via `curl -F "caption=$cap"` num loop bash, a legenda do PRIMEIRO
+quadro (cuja legenda continha aspas duplas escapadas, ex.:
+`"implementar handoff..."`) chegou vazia no servidor, e todas as legendas
+seguintes ficaram **deslocadas uma posição pra trás** (a legenda do quadro N
+foi parar no quadro N+1). Causa: aspas duplas dentro do valor de `-F`
+quebram o parsing do multipart nalgum ponto do pipeline curl→gateway. Fix
+usado: gravar cada payload de correção em arquivo JSON separado
+(`--data-binary @payload.json`) e corrigir quadro a quadro via `PUT
+.../slides/{id}` depois do upload, em vez de confiar no valor de `caption`
+enviado inline no upload multipart quando o texto contém aspas. Também
+notado: chamadas via Python `urllib` tomam **403 Cloudflare (error 1010,
+bloqueio de WAF por assinatura de user-agent)** neste domínio — usar sempre
+`curl` pra chamadas à API de produção, nunca `urllib`/`requests` puro.
