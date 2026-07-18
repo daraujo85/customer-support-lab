@@ -584,3 +584,35 @@ enviado inline no upload multipart quando o texto contém aspas. Também
 notado: chamadas via Python `urllib` tomam **403 Cloudflare (error 1010,
 bloqueio de WAF por assinatura de user-agent)** neste domínio — usar sempre
 `curl` pra chamadas à API de produção, nunca `urllib`/`requests` puro.
+
+## 16. Ferramenta de publicação reutilizável: `fotonovela_publish.py`
+
+A partir do Módulo 4, toda fotonovela é publicada via
+`.pipeline/fotonovela_publish.py` (usa `curl` em subprocess, nunca
+`urllib` — ver bug acima). Resolve de uma vez os dois bugs de bash
+descobertos nas rodadas anteriores (aspas quebrando `-F`, off-by-one em
+arrays associativos): faz upload SEM caption inline, seta caption/balão via
+`PUT` em JSON de arquivo temporário, e publica. Função
+`publish_fotonovela(token, module_id, title, slug, description,
+display_order, image_dir, captions)` — `captions` é uma lista de
+`(nome_do_arquivo, texto, balloonKind, balloonPos)`.
+
+**Regra de produção a partir daqui (decidida 2026-07-18 após o `/goal`
+"gerar até o final do curso")**: abertura e fecho de cada módulo são
+escritos e gerados JUNTOS, na mesma sessão/script (`gen_fotonovela_mN.py`
+com duas listas `ABERTURA`/`FECHO`), evitando o bug de continuidade
+encontrado no Módulo 2. Cada roteiro parte do estado de maturidade que o
+módulo anterior deixou (nunca reabre uma competência já resolvida) e
+termina em pergunta aberta (abertura) ou reflexão de fechamento (fecho)
+específica do conteúdo daquele módulo.
+
+## 17. ✅ PUBLICADO — Módulo 4 (Runtime, Grafos e Orquestração de Agentes)
+
+Desafio novo: o time sabe planejar UMA tarefa (spec, contexto, HITL), mas
+não sabe orquestrar VÁRIAS etapas que decidem sozinhas — tentam resolver
+com um prompt gigante cheio de condicionais (abertura, cai em loop
+infinito sem nunca escalar pro humano) e resolvem com um grafo declarativo,
+transições tipadas, fail-fast (máx. 2 tentativas) e handoff entre agentes
+especialistas (fecho). Lessons: abertura `e61cbb73-0374-4a8b-9f24-45c3c2e1ccde`,
+fecho `4edc0c58-0a8c-4155-be4d-4d0e9970d74c`. 16/16 quadros corretos na
+primeira tentativa (elenco, sem texto legível, sem balão desenhado).
