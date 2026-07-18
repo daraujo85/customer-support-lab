@@ -130,7 +130,9 @@ só leitura/análise (Claude Code não escreve nada, sem branch), 1.6 tem
 evolução real (`lesson/m01-a06-fundamentos-engenharia`, mergeada na `main`),
 1.7 é demonstração da esteira já existente (histórico real + docs reais +
 Claude Code em modo análise via shim — árvore começa e termina limpa, sem
-branch/commit novo).
+branch/commit novo), 1.8 fecha o módulo com prova/reflexão (10 situações de
+julgamento + Claude Code em modo análise preparando avaliação/delegação/
+evolução desnecessária — também sem branch/commit novo).
 
 ## Dependências e versões (se o roteiro for citar tecnologia por nome)
 
