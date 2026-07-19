@@ -29,6 +29,35 @@ header {
   font-weight: 700;
   font-size: 14px;
   border-bottom: 1px solid rgba(143, 212, 95, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.payload-toggle {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(143, 212, 95, 0.4);
+  background: transparent;
+  color: #8fd45f;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.payload-panel {
+  margin: 0;
+  padding: 12px 16px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #0f0e0a;
+  color: #d7d2c3;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(143, 212, 95, 0.2);
+  white-space: pre-wrap;
 }
 
 .chat-log {
