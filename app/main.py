@@ -37,7 +37,6 @@ def chat(req: ChatRequest) -> ChatResponse:
     session_id = req.session_id or str(uuid4())
     session = _sessions.setdefault(session_id, Session())
     reply = handle_input(session, req.message)
-    session.history.append(req.message)
     return ChatResponse(session_id=session_id, reply=reply)
 
 

@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from .state import ChatState, MenuOption, Session
+from .state import ChatState, MenuOption, Message, Session
 
 MAIN_MENU: list[MenuOption] = [
     MenuOption("1", "Suporte técnico", ChatState.SUPORTE_TECNICO),
@@ -60,14 +60,12 @@ def resolve_menu_option(user_input: str) -> MenuOption | None:
     )
 
 
-def handle_input(session: Session, user_input: str) -> str:
+def _resolve_reply(session: Session, user_input: str) -> str:
     """Aplica UMA transição da árvore de decisão e devolve a resposta fixa.
 
     Estado + evento (entrada do usuário) -> transição -> novo estado.
     Entrada não reconhecida não avança o estado (permanece no menu).
     """
-    user_input = user_input.strip()
-
     if session.state == ChatState.GREETING:
         session.state = ChatState.MAIN_MENU
         return f"{greeting()}\n\n{menu_text()}"
@@ -82,3 +80,15 @@ def handle_input(session: Session, user_input: str) -> str:
     # Qualquer outro estado: encerra o atendimento determinístico.
     session.state = ChatState.ENCERRADO
     return "Obrigado pelo contato! Se precisar de algo mais, é só chamar de novo."
+
+
+def handle_input(session: Session, user_input: str) -> str:
+    """Resolve a transição e registra a rodada (user + assistant) na sessão
+    no formato role/content — é esse registro que a Aula 2.1 expõe como o
+    payload de conversação (ver `app/chat/payload.py`)."""
+    user_input = user_input.strip()
+    reply = _resolve_reply(session, user_input)
+
+    session.messages.append(Message("user", user_input))
+    session.messages.append(Message("assistant", reply))
+    return reply
