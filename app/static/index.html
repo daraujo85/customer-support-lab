@@ -7,8 +7,12 @@
 </head>
 <body>
   <main class="chat-widget">
-    <header>Atendimento ao Cliente — Sistema Básico</header>
+    <header>
+      Atendimento ao Cliente — Sistema Básico
+      <button id="payload-toggle" class="payload-toggle" type="button">Ver payload</button>
+    </header>
     <div id="log" class="chat-log"></div>
+    <pre id="payload" class="payload-panel" hidden></pre>
     <form id="form" class="chat-form">
       <input id="input" type="text" placeholder="Digite sua opção ou mensagem..." autocomplete="off" />
       <button type="submit">Enviar</button>

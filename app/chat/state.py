@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import Literal
 
 
 class ChatState(str, Enum):
@@ -27,9 +28,18 @@ class MenuOption:
 
 
 @dataclass
+class Message:
+    """Uma entrada da conversa no formato role/content que qualquer API de
+    chat (OpenAI, Anthropic, etc.) espera receber. Aula 2.1 do curso."""
+
+    role: Literal["system", "user", "assistant"]
+    content: str
+
+
+@dataclass
 class Session:
     """Estado de uma conversa. Nada é persistido nesta aula (Aula 2.6 introduz
     a separação entre estado de usuário, de sessão e de execução)."""
 
     state: ChatState = ChatState.GREETING
-    history: list[str] = field(default_factory=list)
+    messages: list[Message] = field(default_factory=list)
