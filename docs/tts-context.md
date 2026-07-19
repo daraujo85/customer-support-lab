@@ -73,7 +73,8 @@ customer-support-lab/
       app.js
       styles.css
   tests/
-    test_chat_flow.py        # 4 testes, todos passando
+    test_chat_flow.py        # 8 testes (4 da Aula 1.3 + 4 da Aula 1.6)
+    test_payload.py          # 4 testes da Aula 2.1 — 12 testes no total
   docs/
     architecture.md
     course-roadmap.md
@@ -124,6 +125,47 @@ customer-support-lab/
 - Nenhuma chamada de LLM/IA existe no código ainda — a primeira entra na Aula 2.8.
 - `specs/` e `skills/` estão vazios — populam a partir do Módulo 3 (skill
   `tlc-spec-driven`).
+
+## Aula 2.1 — "O que existe por trás de um chat" (payload de conversação)
+
+Roteiro completo em `docs/aula-2-1-roteiro.md` — resumo aqui pro TTS:
+
+- **Branch**: `lesson/m02-a01-payload-conversacao`, derivada da tag
+  `m01-a06-end` (não da `main` — a `main` tinha commits de docs/fotonovela à
+  frente, sem relação com o laboratório).
+- **Tags**: `m02-a01-start` / `m02-a01-end`. 6 commits pequenos, merge
+  `--no-ff` na `main`.
+- **Arquivos alterados**: `app/chat/state.py` (nova `Message`,
+  `Session.messages` no lugar de `Session.history`), `app/chat/flow.py`
+  (`handle_input` agora registra cada rodada user+assistant),
+  `app/chat/payload.py` (**novo** — `build_payload(session)`), `app/main.py`
+  (**novo** endpoint `GET /api/chat/{session_id}/payload`),
+  `app/static/index.html` + `app.js` + `styles.css` (painel "Ver payload" na
+  interface), `tests/test_payload.py` (**novo**, 4 testes).
+- **Nenhuma chamada de LLM existe ainda** — esta aula só monta e EXPÕE o
+  payload no formato role/content; a primeira geração real é a Aula 2.8.
+- **Comportamento final**: ao clicar "Ver payload" no header do widget, um
+  painel `<pre>` mostra o JSON do payload da sessão atual, atualizando a cada
+  mensagem enviada. Formato exato (`system` sempre primeiro, propositalmente
+  genérico — Persona de verdade é Aula 2.3):
+  ```json
+  [
+    {"role": "system", "content": "Você é o assistente de atendimento ao cliente."},
+    {"role": "user", "content": ""},
+    {"role": "assistant", "content": "Boa noite! Bem-vindo ao suporte..."},
+    {"role": "user", "content": "1"},
+    {"role": "assistant", "content": "Você está em Suporte técnico..."}
+  ]
+  ```
+- **Comando de teste** (mesmo padrão de sempre):
+  ```bash
+  docker compose build app
+  docker compose run --rm app python -m pytest -v
+  ```
+  → 12 testes passando (8 antigos + 4 novos de `test_payload.py`).
+- **Endpoint novo pra citar/mostrar na narração**: `GET
+  /api/chat/{session_id}/payload` → `{"session_id": "...", "payload": [...]}`
+  (404 se `session_id` não existir).
 
 ## Identidade dos commits
 
