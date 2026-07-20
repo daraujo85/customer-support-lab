@@ -193,6 +193,52 @@ Roteiro completo em `docs/aula-2-1-roteiro.md` — resumo aqui pro TTS:
   /api/chat/{session_id}/payload` → `{"session_id": "...", "payload": [...]}`
   (404 se `session_id` não existir).
 
+## Aula 2.2 — "System, User e Assistant" (papéis do payload)
+
+Roteiro completo em `docs/aula-2-2-roteiro.md` se existir; resumo pro TTS:
+
+- **Sem branch/commit/tag novos** — a aula não evolui o laboratório, só usa
+  o payload já existente da Aula 2.1 (`m02-a01-end`) como objeto de análise.
+  Começa e termina com `git status` limpo.
+- Explica a responsabilidade de `system` (orientação, não barreira de
+  segurança), `user` (preserva origem, não veracidade/segurança) e
+  `assistant` (função na conversa, não prova de chamada de LLM — neste
+  laboratório vem de `_resolve_reply`, 100% determinístico).
+- 3 sessões de Claude Code (shim, zero escrita de arquivo): explica os
+  papéis, analisa 3 erros hipotéticos de uso de `role`, identifica garantias
+  que precisam continuar no código determinístico mesmo com um `system` bem
+  escrito.
+
+## Aula 2.3 — "Persona não é fantasia" (persona explícita)
+
+Roteiro completo em `docs/aula-2-3-roteiro.md` — resumo aqui pro TTS:
+
+- **Branch**: `lesson/m02-a03-persona-assistente`, derivada da `main`
+  (a Aula 2.2 não alterou o repositório, então a `main` já estava no estado
+  de `m02-a01-end`).
+- **Tags**: `m02-a03-start` / `m02-a03-end`. 3 commits pequenos, merge
+  `--no-ff` na `main`.
+- **Arquivos alterados**: `app/chat/persona.py` (**novo** — `Persona`
+  dataclass congelada + `CUSTOMER_SUPPORT_PERSONA` + `build_system_prompt`),
+  `app/chat/payload.py` (`SYSTEM_PROMPT` passa a vir de
+  `build_system_prompt(CUSTOMER_SUPPORT_PERSONA)` em vez de uma frase solta),
+  `tests/test_persona.py` (**novo**, 4 testes).
+- **Persona não tem nome humano fictício** de propósito — é identidade
+  funcional + escopo + tom + vocabulário + limites, como dados explícitos,
+  montados de forma tradicional/determinística (nunca gerados por IA).
+- **Nenhuma chamada de LLM existe ainda** — isso continua reservado pra Aula
+  2.8; o menu e as respostas visíveis continuam 100% determinísticos
+  (opções 1-4 inalteradas).
+- **Comportamento final**: o primeiro item do payload (`role: system`) passa
+  a exibir a persona completa com seções `ESCOPO`/`TOM`/`VOCABULÁRIO`/
+  `LIMITES` em vez da frase genérica da Aula 2.1/2.2.
+- **Comando de teste** (mesmo padrão de sempre):
+  ```bash
+  docker compose build app
+  docker compose run --rm app python -m pytest -v
+  ```
+  → 16 testes passando (12 anteriores + 4 novos de `test_persona.py`).
+
 ## Identidade dos commits
 
 Commits vão com `Diego Araújo <jcresgate@gmail.com>` (identidade pessoal) — se a
