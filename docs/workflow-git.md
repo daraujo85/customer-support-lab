@@ -177,7 +177,7 @@ técnico sobre uma plataforma real), não uma evolução direta do
 | Aula | Evolução do laboratório | Branch |
 |---|---|---|
 | 3.3 — SDD na prática com `tlc-spec-driven` | Instalação da skill e criação da Spec (retroativa) da evolução generativa | `lesson/m03-a03-sdd-tlc-spec-driven` ✅ criada |
-| 3.4 — Anatomia de uma boa Spec | Refinamento da Spec, critérios de aceite, testes e evidências | `lesson/m03-a04-refinamento-spec` |
+| 3.4 — Anatomia de uma boa Spec | Refinamento da Spec, critérios de aceite, testes e evidências | `lesson/m03-a04-refinamento-spec` ✅ criada |
 | 3.5 — Contexto em camadas | Organização dos arquivos e fontes de contexto do projeto | `lesson/m03-a05-contexto-em-camadas` |
 | 3.6 — Prompts como artefatos versionados | Extração dos prompts do código e versionamento | `lesson/m03-a06-prompts-versionados` |
 | 3.7 — Montagem condicional de prompts | Condições determinísticas resolvidas antes da inferência | `lesson/m03-a07-prompts-condicionais` |
