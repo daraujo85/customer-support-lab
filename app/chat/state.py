@@ -1,7 +1,8 @@
 """Estruturas do fluxo determinístico: estado, evento e transição.
 
 Aula 1.3 do curso — máquina de estados finita, sem geração de linguagem.
-Nada aqui conhece IA; a Aula 2.8 é quem introduz a primeira camada generativa.
+Nada aqui conhece IA; a Aula 2.8 introduz a fronteira generativa por meio de
+um componente local didático — nenhuma chamada de LLM real acontece.
 """
 from __future__ import annotations
 

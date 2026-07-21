@@ -2,9 +2,11 @@
 o que qualquer API de chat (OpenAI, Anthropic, etc.) espera receber.
 
 Aula 2.1 do curso: "O que existe por trás de um chat". Nenhuma LLM é chamada
-aqui — só expomos a estrutura que uma geração real usaria (isso chega na
-Aula 2.8). Aula 2.3: a mensagem system passa a vir da persona explícita
-(app/chat/persona.py), não de uma frase solta.
+aqui — só expomos a estrutura que uma geração real usaria. A Aula 2.8
+introduz a fronteira generativa por meio de um componente local didático
+(ver `chat.generative`/`chat.local_generation`); uma integração com LLM real
+permanece fora desta etapa. Aula 2.3: a mensagem system passa a vir da
+persona explícita (app/chat/persona.py), não de uma frase solta.
 """
 from __future__ import annotations
 

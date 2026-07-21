@@ -148,7 +148,9 @@ evolução desnecessária — também sem branch/commit novo).
 - PostgreSQL, Redis, Elasticsearch/pgvector — **não fazem parte do compose ainda**.
   Só entram no módulo do curso que efetivamente precisar (ver
   `docs/course-roadmap.md` no repo para o mapeamento módulo → peça nova).
-- Nenhuma chamada de LLM/IA existe no código ainda — a primeira entra na Aula 2.8.
+- Nenhuma chamada de LLM/IA real existe no código — a Aula 2.8 introduz um
+  componente LOCAL e determinístico que simula a fronteira generativa, não
+  uma inferência de verdade.
 - `specs/` e `skills/` estão vazios — populam a partir do Módulo 3 (skill
   `tlc-spec-driven`).
 
@@ -168,8 +170,9 @@ Roteiro completo em `docs/aula-2-1-roteiro.md` — resumo aqui pro TTS:
   (**novo** endpoint `GET /api/chat/{session_id}/payload`),
   `app/static/index.html` + `app.js` + `styles.css` (painel "Ver payload" na
   interface), `tests/test_payload.py` (**novo**, 4 testes).
-- **Nenhuma chamada de LLM existe ainda** — esta aula só monta e EXPÕE o
-  payload no formato role/content; a primeira geração real é a Aula 2.8.
+- **Nenhuma chamada de LLM existe** — esta aula só monta e EXPÕE o
+  payload no formato role/content; a Aula 2.8 introduz a fronteira
+  generativa por um componente local didático, sem inferência real.
 - **Comportamento final**: ao clicar "Ver payload" no header do widget, um
   painel `<pre>` mostra o JSON do payload da sessão atual, atualizando a cada
   mensagem enviada. Formato exato (`system` sempre primeiro, propositalmente
@@ -226,9 +229,9 @@ Roteiro completo em `docs/aula-2-3-roteiro.md` — resumo aqui pro TTS:
 - **Persona não tem nome humano fictício** de propósito — é identidade
   funcional + escopo + tom + vocabulário + limites, como dados explícitos,
   montados de forma tradicional/determinística (nunca gerados por IA).
-- **Nenhuma chamada de LLM existe ainda** — isso continua reservado pra Aula
-  2.8; o menu e as respostas visíveis continuam 100% determinísticos
-  (opções 1-4 inalteradas).
+- **Nenhuma chamada de LLM existe** — a Aula 2.8 introduz um componente
+  local didático pra texto livre, sem inferência real; o menu e as opções
+  1-4 continuam 100% determinísticos.
 - **Comportamento final**: o primeiro item do payload (`role: system`) passa
   a exibir a persona completa com seções `ESCOPO`/`TOM`/`VOCABULÁRIO`/
   `LIMITES` em vez da frase genérica da Aula 2.1/2.2.
@@ -267,7 +270,8 @@ Roteiro completo em `docs/aula-2-5-roteiro.md` — resumo aqui pro TTS:
   (**novo**, 8 testes).
 - **Sem chamar nenhuma IA** — o resumo é um retrato ESTRUTURADO (não texto
   livre), atualizado por regra determinística de transição de estado; a
-  primeira chamada de LLM real só chega na Aula 2.8.
+  Aula 2.8 introduz a fronteira generativa por um componente local
+  didático, sem chamada de LLM real.
 - **`session.messages` nunca é apagado** — a compactação reduz o que é
   ENVIADO no payload, não o que é GUARDADO na sessão.
 - **Comportamento final**: até 4 mensagens no histórico, payload idêntico ao
@@ -281,6 +285,55 @@ Roteiro completo em `docs/aula-2-5-roteiro.md` — resumo aqui pro TTS:
   docker compose run --rm app python -m pytest -v
   ```
   → 24 testes passando (16 anteriores + 8 novos de `test_summary.py`).
+
+## Aula 2.8 — "Primeira evolução generativa" (componente local didático)
+
+Roteiro completo em `docs/aula-2-8-roteiro.md` — resumo aqui pro TTS:
+
+- **RESSALVA a dizer com todas as letras**: nesta aula não existe chamada de
+  LLM, API externa ou custo por token. A arquitetura generativa entra agora;
+  a inferência por modelo, não.
+- **Branch**: `lesson/m02-a08-primeira-evolucao-generativa`, derivada da
+  `main` (as Aulas 2.6 e 2.7 foram conceituais, então a `main` já estava no
+  estado de `m02-a05-end`).
+- **Tags**: `m02-a08-start` / `m02-a08-end`.
+- **Arquivos novos**: `app/chat/generative.py` (contrato
+  `GenerativeComponent`, `Intent`, `ResolutionMode`, `GeneratedTurn`,
+  `MIN_ACCEPTED_SCORE = 0.70`), `app/chat/local_generation.py`
+  (`LocalDidacticComponent` — normalização, regras por frase/palavra-chave,
+  score determinístico, geração por template), `tests/test_local_generation.py`
+  (**novo**, 8 testes) e `tests/test_generative_flow.py` (**novo**, 8 testes).
+- **Arquivos alterados**: `app/chat/flow.py` (`handle_input` ganha
+  `component` opcional; texto livre no menu e nos estados de domínio já
+  conhecidos passa pelo componente antes de decidir a transição),
+  `app/chat/summary.py` (`update_summary` ganha `resolution_mode` e
+  `resolved_state`), `app/main.py` (`GENERATION_MODE` escolhe a implementação
+  injetada no boot), `docker-compose.yml` (`GENERATION_MODE`).
+- **`LocalDidacticComponent` é a implementação REAL usada em runtime** — não
+  é um mock de teste (os doubles ficam restritos aos testes que simulam
+  falha/resposta específica). Ela simula a fronteira entre determinístico e
+  interpretação: classifica intenção, calcula um score reproduzível e gera
+  resposta por template — nunca por aleatoriedade.
+- **O componente sugere, o código decide**: uma tabela explícita
+  (`INTENT_TO_STATE`) converte a intenção sugerida em estado; opções
+  numéricas continuam determinísticas (o componente nunca é chamado nesse
+  caminho); empate, ausência de evidência ou componente desligado acionam o
+  mesmo fallback determinístico de sempre.
+- **Comportamento final**: "Meu computador não liga." no menu → classificado
+  como suporte técnico e respondido por template, sessão encerrada. "Preciso
+  de ajuda." → fallback ("Não consegui classificar sua mensagem com
+  segurança."). "Quero falar com um atendente." → handoff com a resposta
+  fixa já existente (a proposta do componente é ignorada nesse caminho).
+  `GENERATION_MODE=disabled` prova que o componente é capacidade adicional,
+  não dependência obrigatória.
+- **Comando de teste** (mesmo padrão de sempre):
+  ```bash
+  docker compose build app
+  docker compose run --rm app python -m pytest -v
+  ```
+  → 40 testes passando (24 anteriores + 16 novos).
+- **Frase central da aula**: "O componente local simula a fronteira
+  probabilística. O código continua responsável pelas decisões reais."
 
 ## Identidade dos commits
 
