@@ -37,9 +37,27 @@ class Message:
 
 
 @dataclass
+class ConversationSummary:
+    """Retrato estruturado do que importa na conversa — Aula 2.5. Não é uma
+    cópia menor da transcrição: cada campo tem uma responsabilidade própria,
+    atualizada por regra determinística de transição (ver `chat.summary`),
+    nunca por geração de linguagem (isso só chega na Aula 2.8)."""
+
+    facts: list[str] = field(default_factory=list)
+    decisions: list[str] = field(default_factory=list)
+    pending: list[str] = field(default_factory=list)
+    preferences: list[str] = field(default_factory=list)
+
+
+@dataclass
 class Session:
     """Estado de uma conversa. Nada é persistido nesta aula (Aula 2.6 introduz
     a separação entre estado de usuário, de sessão e de execução)."""
 
     state: ChatState = ChatState.GREETING
     messages: list[Message] = field(default_factory=list)
+    summary: ConversationSummary = field(default_factory=ConversationSummary)
+    """Resumo estruturado, atualizado incrementalmente a cada transição (ver
+    `chat.summary.update_summary`) — `messages` continua guardando o
+    histórico bruto completo; resumo e histórico bruto cumprem
+    responsabilidades diferentes (ver `chat.payload.build_payload`)."""
