@@ -7,6 +7,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from .state import ChatState, MenuOption, Message, Session
+from .summary import update_summary
 
 MAIN_MENU: list[MenuOption] = [
     MenuOption("1", "Suporte técnico", ChatState.SUPORTE_TECNICO),
@@ -85,10 +86,13 @@ def _resolve_reply(session: Session, user_input: str) -> str:
 def handle_input(session: Session, user_input: str) -> str:
     """Resolve a transição e registra a rodada (user + assistant) na sessão
     no formato role/content — é esse registro que a Aula 2.1 expõe como o
-    payload de conversação (ver `app/chat/payload.py`)."""
+    payload de conversação (ver `app/chat/payload.py`). Depois da transição,
+    atualiza o resumo estruturado (Aula 2.5, ver `chat.summary`)."""
     user_input = user_input.strip()
+    previous_state = session.state
     reply = _resolve_reply(session, user_input)
 
     session.messages.append(Message("user", user_input))
     session.messages.append(Message("assistant", reply))
+    update_summary(session=session, previous_state=previous_state, user_input=user_input)
     return reply
