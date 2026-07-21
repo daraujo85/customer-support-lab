@@ -28,14 +28,17 @@ def test_invalid_menu_option_creates_no_decision():
     assert session.summary.decisions == []
 
 
-def test_technical_information_becomes_fact_and_clears_pending():
+def test_technical_information_becomes_fact_and_triggers_handoff_pending():
+    """Sem componente generativo (`component=None`), texto livre num estado de
+    domínio aciona o fallback determinístico — o fato é registrado, mas a
+    pendência passa a ser aguardar atendimento humano (Aula 2.8)."""
     session = Session()
     handle_input(session, "")
     handle_input(session, "1")
     handle_input(session, "meu computador não liga")
 
     assert session.summary.facts == ["Usuário informou problema técnico: meu computador não liga."]
-    assert session.summary.pending == []
+    assert session.summary.pending == ["Aguardar atendimento humano."]
 
 
 def test_human_handoff_keeps_pending_even_after_extra_message():

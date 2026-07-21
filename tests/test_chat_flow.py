@@ -19,11 +19,14 @@ def test_valid_menu_option_transitions_to_expected_state():
 
 
 def test_invalid_menu_option_stays_on_main_menu():
+    """Aula 2.8: entrada que não é opção numérica passa pela classificação de
+    texto livre — sem componente disponível (ou sem evidência), o fluxo
+    permanece no menu com a mensagem de fallback determinístico."""
     session = Session(state=ChatState.MAIN_MENU)
     reply = handle_input(session, "9")
 
     assert session.state == ChatState.MAIN_MENU
-    assert reply.startswith("Não entendi.")
+    assert reply.startswith("Não consegui classificar sua mensagem com segurança.")
 
 
 def test_menu_text_lists_all_options():
@@ -32,13 +35,18 @@ def test_menu_text_lists_all_options():
         assert label in text
 
 
-def test_message_after_selected_option_ends_conversation():
+def test_message_in_domain_state_without_component_triggers_handoff():
+    """Aula 2.8: sem componente generativo disponível (`component=None`, o
+    mesmo que `GENERATION_MODE=disabled`), texto livre num estado de domínio
+    já conhecido aciona o fallback determinístico de encaminhamento humano —
+    prova que o componente novo é uma capacidade adicional, não uma
+    dependência obrigatória."""
     session = Session(state=ChatState.SUPORTE_TECNICO)
 
     reply = handle_input(session, "Meu computador não liga")
 
-    assert session.state == ChatState.ENCERRADO
-    assert "Obrigado pelo contato" in reply
+    assert session.state == ChatState.HUMAN_HANDOFF
+    assert "vou te encaminhar para um atendente humano" in reply
 
 
 def test_resolve_menu_option_returns_expected_option():
