@@ -38,6 +38,9 @@ skills/             # skills/playbooks do curso
 
 ## Estado atual
 
-**Aula 1.3** — chatbot determinístico: saudação por horário, menu fixo, árvore de
-decisão. Zero geração de linguagem. Ver `docs/architecture.md` para a evolução
-planejada módulo a módulo.
+**Aula 3.3** — primeira evolução real do Módulo 3: a skill `tlc-spec-driven`
+(Specify/Design/Tasks/Execute) foi instalada localmente em `skills/` e a
+primeira Spec do projeto (retroativa, sobre a evolução generativa da Aula 2.8)
+foi criada em `specs/m02-a08-primeira-evolucao-generativa/spec.md`. Nenhum
+código de aplicação mudou nesta aula. Ver `docs/architecture.md` para a
+evolução planejada módulo a módulo.
