@@ -239,6 +239,49 @@ Roteiro completo em `docs/aula-2-3-roteiro.md` — resumo aqui pro TTS:
   ```
   → 16 testes passando (12 anteriores + 4 novos de `test_persona.py`).
 
+## Aula 2.4 — "Janela de contexto" (conceitual)
+
+- **Sem branch/commit/tag novos** — a aula não evolui o laboratório, só usa
+  o crescimento do payload (Aulas 2.1/2.3) como objeto de análise. Começa e
+  termina com `git status` limpo.
+- Explica que todo modelo tem uma janela de contexto finita e que mandar o
+  histórico inteiro a cada rodada cresce sem limite — o PROBLEMA que a Aula
+  2.5 resolve na prática.
+
+## Aula 2.5 — "Resumo de conversa" (resumo estruturado incremental)
+
+Roteiro completo em `docs/aula-2-5-roteiro.md` — resumo aqui pro TTS:
+
+- **Branch**: `lesson/m02-a05-resumo-conversa`, derivada da `main` (a Aula
+  2.4 não alterou o repositório, então a `main` já estava no estado de
+  `m02-a03-end`).
+- **Tags**: `m02-a05-start` / `m02-a05-end`.
+- **Arquivos alterados**: `app/chat/state.py` (**novo** `ConversationSummary`
+  — facts/decisions/pending/preferences; `Session` ganha `summary`),
+  `app/chat/summary.py` (**novo** — `update_summary(session, previous_state,
+  user_input)` + `render_summary(summary)`, regra por transição de estado),
+  `app/chat/payload.py` (**novo** `RECENT_MESSAGE_LIMIT = 4` +
+  `build_system_context(session)`; `build_payload` compacta só quando
+  necessário), `app/chat/flow.py` (`handle_input` captura o estado anterior
+  e chama `update_summary` depois da transição), `tests/test_summary.py`
+  (**novo**, 8 testes).
+- **Sem chamar nenhuma IA** — o resumo é um retrato ESTRUTURADO (não texto
+  livre), atualizado por regra determinística de transição de estado; a
+  primeira chamada de LLM real só chega na Aula 2.8.
+- **`session.messages` nunca é apagado** — a compactação reduz o que é
+  ENVIADO no payload, não o que é GUARDADO na sessão.
+- **Comportamento final**: até 4 mensagens no histórico, payload idêntico ao
+  de antes (persona só). Passando de 4, o `system` ganha a seção "CONTEXTO
+  RESUMIDO DA SESSÃO" com quatro subseções sempre presentes (FATOS,
+  DECISÕES, PENDÊNCIAS, PREFERÊNCIAS — "Nenhuma/nenhum ... registrado" quando
+  vazia), e só as últimas 4 mensagens entram cruas.
+- **Comando de teste** (mesmo padrão de sempre):
+  ```bash
+  docker compose build app
+  docker compose run --rm app python -m pytest -v
+  ```
+  → 24 testes passando (16 anteriores + 8 novos de `test_summary.py`).
+
 ## Identidade dos commits
 
 Commits vão com `Diego Araújo <jcresgate@gmail.com>` (identidade pessoal) — se a
