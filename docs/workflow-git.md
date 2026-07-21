@@ -170,7 +170,7 @@ técnico sobre uma plataforma real), não uma evolução direta do
 | 2.1 — O que existe por trás de um chat | Exposição e visualização do payload de mensagens | `lesson/m02-a01-payload-conversacao` ✅ criada |
 | 2.3 — Persona não é fantasia | Definição de identidade, escopo e comportamento do assistente | `lesson/m02-a03-persona-assistente` ✅ criada |
 | 2.5 — Resumo de conversa | Compactação e resumo incremental do histórico | `lesson/m02-a05-resumo-conversa` ✅ criada |
-| 2.8 — Primeira evolução generativa | Entrada livre, classificação de intenção, geração e fallback determinístico | `lesson/m02-a08-primeira-evolucao-generativa` |
+| 2.8 — Primeira evolução generativa | Entrada livre, classificação de intenção, geração e fallback determinístico (componente local didático, sem LLM real) | `lesson/m02-a08-primeira-evolucao-generativa` ✅ criada |
 
 ### Módulo 3 — Spec Driven Development e contexto
 
