@@ -3,6 +3,11 @@ import pytest
 
 from app.chat.generative import GenerativeComponentError, Intent
 from app.chat.ollama_generation import OllamaGenerativeComponent
+from app.chat.prompt_loader import load_prompt_template
+
+_TASK_INSTRUCTION_TEMPLATE = load_prompt_template()
+"""Aula 3.9: o template oficial agora vem do artefato versionado
+(prompts/task_instruction.md), não de uma constante deste módulo."""
 
 
 def _component(handler) -> OllamaGenerativeComponent:
@@ -14,6 +19,7 @@ def _component(handler) -> OllamaGenerativeComponent:
         model="llama3.2:1b",
         timeout_seconds=30,
         num_ctx=2048,
+        task_instruction_template=_TASK_INSTRUCTION_TEMPLATE,
         client=client,
     )
 
@@ -171,10 +177,22 @@ def test_oversized_content_raises_generative_component_error():
 
 def test_constructor_validates_arguments():
     with pytest.raises(ValueError):
-        OllamaGenerativeComponent(base_url="", model="m", timeout_seconds=1)
+        OllamaGenerativeComponent(
+            base_url="", model="m", timeout_seconds=1, task_instruction_template="t"
+        )
     with pytest.raises(ValueError):
-        OllamaGenerativeComponent(base_url="http://x", model="", timeout_seconds=1)
+        OllamaGenerativeComponent(
+            base_url="http://x", model="", timeout_seconds=1, task_instruction_template="t"
+        )
     with pytest.raises(ValueError):
-        OllamaGenerativeComponent(base_url="http://x", model="m", timeout_seconds=0)
+        OllamaGenerativeComponent(
+            base_url="http://x", model="m", timeout_seconds=0, task_instruction_template="t"
+        )
     with pytest.raises(ValueError):
-        OllamaGenerativeComponent(base_url="http://x", model="m", timeout_seconds=1, num_ctx=0)
+        OllamaGenerativeComponent(
+            base_url="http://x", model="m", timeout_seconds=1, task_instruction_template="t", num_ctx=0
+        )
+    with pytest.raises(ValueError):
+        OllamaGenerativeComponent(
+            base_url="http://x", model="m", timeout_seconds=1, task_instruction_template=""
+        )

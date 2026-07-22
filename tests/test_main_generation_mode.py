@@ -1,7 +1,9 @@
 import pytest
 
+import app.main as main_module
 from app.chat.local_generation import LocalDidacticComponent
 from app.chat.ollama_generation import OllamaGenerativeComponent
+from app.chat.prompt_loader import PromptTemplateError
 from app.main import build_generative_component
 
 
@@ -85,3 +87,42 @@ def test_unknown_mode_raises(monkeypatch):
 
     with pytest.raises(RuntimeError):
         build_generative_component()
+
+
+def test_ollama_mode_fails_fast_when_prompt_artifact_is_invalid(monkeypatch):
+    """Aula 3.9: artefato de prompt ausente/inválido é erro de CONFIGURAÇÃO —
+    derruba o boot no modo ollama, diferente do Ollama estar desligado (isso
+    é falha de serviço externo, tratada como fallback em runtime, não no boot)."""
+    monkeypatch.setenv("GENERATION_MODE", "ollama")
+
+    def _raise():
+        raise PromptTemplateError("artefato de prompt ausente")
+
+    monkeypatch.setattr(main_module, "load_prompt_template", _raise)
+
+    with pytest.raises(PromptTemplateError):
+        build_generative_component()
+
+
+def test_local_didactic_mode_does_not_depend_on_prompt_artifact(monkeypatch):
+    monkeypatch.setenv("GENERATION_MODE", "local_didactic")
+
+    def _raise():
+        raise PromptTemplateError("não deveria ser chamado")
+
+    monkeypatch.setattr(main_module, "load_prompt_template", _raise)
+
+    component = build_generative_component()
+
+    assert isinstance(component, LocalDidacticComponent)
+
+
+def test_disabled_mode_does_not_depend_on_prompt_artifact(monkeypatch):
+    monkeypatch.setenv("GENERATION_MODE", "disabled")
+
+    def _raise():
+        raise PromptTemplateError("não deveria ser chamado")
+
+    monkeypatch.setattr(main_module, "load_prompt_template", _raise)
+
+    assert build_generative_component() is None
