@@ -36,11 +36,25 @@ specs/              # Specs produzidas com a skill tlc-spec-driven (a partir do 
 skills/             # skills/playbooks do curso
 ```
 
+## Rodando com inferência real (Ollama)
+
+```bash
+GENERATION_MODE=ollama docker compose up --build
+```
+
+Requer [Ollama](https://ollama.com) rodando no host com o modelo baixado
+(`ollama pull llama3.2:1b`). Variáveis de ambiente opcionais:
+`OLLAMA_BASE_URL` (default `http://host.docker.internal:11434`),
+`OLLAMA_MODEL` (default `llama3.2:1b`), `OLLAMA_TIMEOUT_SECONDS` (default
+`60`), `OLLAMA_NUM_CTX` (default `2048`). Sem Ollama disponível, o app sobe
+normalmente e cai no fallback determinístico na primeira chamada que falhar.
+
 ## Estado atual
 
-**Aula 3.4** — refinamento da Spec criada na 3.3: o mesmo arquivo
-(`specs/m02-a08-primeira-evolucao-generativa/spec.md`) ganhou critérios de
-aceite numerados, observáveis e binários (AC-01 a AC-08) e uma matriz de
-rastreabilidade explícita ligando cada critério ao(s) teste(s) que o
-comprovam. Nenhum código de aplicação ou teste mudou — só documentação. Ver
-`docs/architecture.md` para a evolução planejada módulo a módulo.
+**Aula 3.8** — primeira inferência REAL do laboratório: `GENERATION_MODE=ollama`
+constrói `OllamaGenerativeComponent` (ver `app/chat/ollama_generation.py`,
+Spec em `specs/m03-a08-contexto-em-camadas/spec.md`). Classificação de
+intenção, score de confiança e transição de estado continuam 100%
+determinísticos — só o TEXTO da resposta passa a vir de uma LLM local via
+Ollama. `local_didactic` e `disabled` continuam funcionando exatamente como
+antes. Ver `docs/architecture.md` para a evolução planejada módulo a módulo.

@@ -71,6 +71,15 @@ _STATE_TO_INTENT: dict[ChatState, Intent] = {
 usado pra passar `expected_intent` ao componente sem reclassificar."""
 
 
+def _resolution_mode_for(turn: GeneratedTurn) -> ResolutionMode:
+    """Aula 3.8: o modo de resolução registrado no resumo passa a refletir
+    de qual componente veio o turno (`turn.source`) — antes, qualquer turno
+    resolvido por um componente gravava LOCAL_DIDACTIC de forma fixa."""
+    if turn.source == "ollama":
+        return ResolutionMode.OLLAMA
+    return ResolutionMode.LOCAL_DIDACTIC
+
+
 def greeting() -> str:
     """Saudação baseada no horário do sistema — sem IA, só relógio."""
     hour = datetime.now().hour
@@ -140,7 +149,7 @@ def _resolve_reply(
             return _HANDOFF_REPLY, ResolutionMode.LOCAL_DIDACTIC, None
 
         session.state = ChatState.ENCERRADO
-        return turn.reply, ResolutionMode.LOCAL_DIDACTIC, next_state
+        return turn.reply, _resolution_mode_for(turn), next_state
 
     if session.state in _STATE_TO_INTENT:
         # Estado de domínio já conhecido: chama o componente com a intenção
@@ -161,7 +170,7 @@ def _resolve_reply(
             return _HANDOFF_REPLY, ResolutionMode.FALLBACK, None
 
         session.state = ChatState.ENCERRADO
-        return turn.reply, ResolutionMode.LOCAL_DIDACTIC, None
+        return turn.reply, _resolution_mode_for(turn), None
 
     # HUMAN_HANDOFF ou ENCERRADO: encerramento determinístico, sem componente.
     session.state = ChatState.ENCERRADO

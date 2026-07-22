@@ -9,6 +9,10 @@ estado — não uma cópia menor da transcrição.
 Aula 2.8: o resumo passa a registrar também COMO cada turno foi resolvido
 (`resolution_mode`) — regra determinística pura, componente local didático ou
 fallback — pra deixar rastreável quando a resposta veio de cada caminho.
+
+Aula 3.8: novo modo `ResolutionMode.OLLAMA` — turno resolvido por inferência
+real via Ollama (ver `chat.ollama_generation`) registra uma decisão própria,
+distinta do componente local didático.
 """
 from __future__ import annotations
 
@@ -38,7 +42,16 @@ _FACT_TEMPLATE_BY_STATE: dict[ChatState, str] = {
 
 _ENCERRADO_DECISION = "Atendimento determinístico encerrado após coleta da informação."
 _LOCAL_DIDACTIC_DECISION = "Atendimento encerrado após resposta do componente local didático."
+_OLLAMA_DECISION = "Atendimento encerrado após resposta do modelo local via Ollama."
 _FALLBACK_DECISION = "Fallback determinístico acionado após indisponibilidade do componente local."
+
+
+def _decision_for_resolution(resolution_mode: ResolutionMode) -> str:
+    if resolution_mode == ResolutionMode.OLLAMA:
+        return _OLLAMA_DECISION
+    if resolution_mode == ResolutionMode.LOCAL_DIDACTIC:
+        return _LOCAL_DIDACTIC_DECISION
+    return _ENCERRADO_DECISION
 
 
 def _append_unique(items: list[str], value: str) -> None:
@@ -111,7 +124,7 @@ def update_summary(
             f"Área de atendimento selecionada: {_LABEL_BY_STATE[resolved_state]}.",
         )
         _append_unique(summary.facts, _FACT_TEMPLATE_BY_STATE[resolved_state].format(input=user_input))
-        _append_unique(summary.decisions, _LOCAL_DIDACTIC_DECISION)
+        _append_unique(summary.decisions, _decision_for_resolution(resolution_mode))
         _set_pending(summary, None)
         return
 
@@ -125,8 +138,7 @@ def update_summary(
 
     if previous_state in _FACT_TEMPLATE_BY_STATE and session.state == ChatState.ENCERRADO:
         _append_unique(summary.facts, _FACT_TEMPLATE_BY_STATE[previous_state].format(input=user_input))
-        decision = _LOCAL_DIDACTIC_DECISION if resolution_mode == ResolutionMode.LOCAL_DIDACTIC else _ENCERRADO_DECISION
-        _append_unique(summary.decisions, decision)
+        _append_unique(summary.decisions, _decision_for_resolution(resolution_mode))
         _set_pending(summary, None)
         return
 

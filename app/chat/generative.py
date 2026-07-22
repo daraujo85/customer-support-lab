@@ -1,16 +1,21 @@
 """Contrato do componente generativo — Aula 2.8 do curso.
 
-Esta aula introduz a FRONTEIRA generativa da arquitetura, não uma inferência
+A Aula 2.8 introduziu a FRONTEIRA generativa da arquitetura, sem inferência
 real: nenhuma chamada de LLM, API externa, modelo local ou serviço pago
-acontece neste laboratório. A implementação usada em runtime
-(`LocalDidacticComponent`, ver `chat.local_generation`) é um componente local,
-determinístico e didático que simula o CONTRATO de uma integração
-probabilística — classificação de intenção, score de confiança e geração de
-resposta — sem aleatoriedade e sempre reproduzível.
+acontecia no laboratório. A implementação `LocalDidacticComponent` (ver
+`chat.local_generation`) é um componente local, determinístico e didático
+que simula o CONTRATO de uma integração probabilística — classificação de
+intenção, score de confiança e geração de resposta — sem aleatoriedade e
+sempre reproduzível.
 
-O contrato (`GenerativeComponent`) é o que permite, no futuro, substituir essa
-implementação local por um provider real (API paga, modelo local, etc.) sem
-reescrever a máquina de estados, o resumo ou os testes de domínio.
+A Aula 3.8 usa o mesmo contrato pra introduzir a primeira inferência REAL
+(`OllamaGenerativeComponent`, ver `chat.ollama_generation`) — só o TEXTO da
+resposta passa a vir de uma LLM local via Ollama; classificação de
+intenção, score e decisão de transição de estado continuam 100%
+determinísticos (ver `specs/m03-a08-contexto-em-camadas/spec.md`).
+
+O contrato (`GenerativeComponent`) é o que permite trocar a implementação
+sem reescrever a máquina de estados, o resumo ou os testes de domínio.
 """
 from __future__ import annotations
 
@@ -30,10 +35,12 @@ class Intent(str, Enum):
 class ResolutionMode(str, Enum):
     """Como um turno foi resolvido — registrado no resumo estruturado
     (`chat.summary`) pra deixar explícito quando a resposta veio de regra
-    determinística pura, do componente local didático ou de fallback."""
+    determinística pura, do componente local didático, de uma inferência
+    real via Ollama (Aula 3.8) ou de fallback."""
 
     DETERMINISTIC = "deterministic"
     LOCAL_DIDACTIC = "local_didactic"
+    OLLAMA = "ollama"
     FALLBACK = "fallback"
 
 
@@ -53,7 +60,7 @@ class GeneratedTurn:
     score: float
     reply: str
     matched_terms: tuple[str, ...]
-    source: Literal["local_didactic"] = "local_didactic"
+    source: Literal["local_didactic", "ollama"] = "local_didactic"
 
 
 MessagePayload = list[dict[str, str]]
