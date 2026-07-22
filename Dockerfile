@@ -7,6 +7,7 @@ RUN pip install --no-cache-dir fastapi "uvicorn[standard]" pydantic pytest httpx
 
 COPY app ./app
 COPY tests ./tests
+COPY prompts ./prompts
 
 EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

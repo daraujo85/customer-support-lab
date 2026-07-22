@@ -34,6 +34,7 @@ tests/              # pytest
 docs/               # arquitetura + roadmap do laboratório por módulo
 specs/              # Specs produzidas com a skill tlc-spec-driven (a partir do Módulo 3)
 skills/             # skills/playbooks do curso
+prompts/            # prompts como artefato versionado (a partir da Aula 3.9)
 ```
 
 ## Rodando com inferência real (Ollama)
@@ -50,6 +51,16 @@ Requer [Ollama](https://ollama.com) rodando no host com o modelo baixado
 normalmente e cai no fallback determinístico na primeira chamada que falhar.
 
 ## Estado atual
+
+**Aula 3.9** — o prompt vira artefato versionado: a instrução de tarefa que
+vivia como constante Python em `ollama_generation.py` agora mora em
+`prompts/task_instruction.md`, carregada e validada por
+`app/chat/prompt_loader.py` no ponto de composição da aplicação
+(`app/main.py`). O texto e o comportamento são idênticos aos da Aula 3.8 —
+só a ORIGEM mudou. `GENERATION_MODE=ollama` com o artefato ausente ou
+inválido falha rápido no boot (erro de configuração); `local_didactic` e
+`disabled` não dependem do arquivo. Ver
+`specs/m03-a09-prompts-versionados/spec.md`.
 
 **Aula 3.8** — primeira inferência REAL do laboratório: `GENERATION_MODE=ollama`
 constrói `OllamaGenerativeComponent` (ver `app/chat/ollama_generation.py`,

@@ -182,7 +182,7 @@ técnico sobre uma plataforma real), não uma evolução direta do
 | 3.6 — Hardware pra IA local: CPU, GPU, VRAM e memória unificada | Conceito com demonstrações — **não altera o repositório** | — (sem branch) |
 | 3.7 — Modelos locais por tarefa: texto, embeddings e visão | Conceito com demonstrações — **não altera o repositório** | — (sem branch) |
 | 3.8 — Contexto em camadas e primeira inferência real | Organização dos arquivos/fontes de contexto + primeira conexão real do chatbot com Ollama | `lesson/m03-a08-contexto-em-camadas` ✅ criada |
-| 3.9 — Prompts como artefatos versionados | Extração dos prompts do código e versionamento | `lesson/m03-a09-prompts-versionados` |
+| 3.9 — Prompts como artefatos versionados | Extração dos prompts do código e versionamento | `lesson/m03-a09-prompts-versionados` ✅ criada |
 | 3.10 — Montagem condicional de prompts | Condições determinísticas resolvidas antes da inferência | `lesson/m03-a10-prompts-condicionais` |
 | 3.11 — Contexto como infraestrutura | Base inicial de conhecimento e fluxo de atualização de contexto (fecho do módulo) | `lesson/m03-a11-contexto-como-infraestrutura` |
 
