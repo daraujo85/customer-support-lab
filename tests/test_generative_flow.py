@@ -107,3 +107,69 @@ def test_unavailable_component_in_domain_triggers_handoff_and_updates_summary():
     assert reply == _HANDOFF_REPLY
     assert "Fallback determinístico acionado após indisponibilidade do componente local." in session.summary.decisions
     assert session.summary.pending == ["Aguardar atendimento humano."]
+
+
+def test_ollama_turn_ends_flow_and_summary_registers_ollama_mode():
+    """Aula 3.8: turno com source='ollama' encerra o fluxo normalmente e o
+    resumo registra a decisão específica de Ollama, distinta da do
+    componente local didático."""
+    session = Session(state=ChatState.MAIN_MENU)
+    turn = GeneratedTurn(
+        Intent.FINANCEIRO,
+        0.90,
+        "Sua fatura está em análise, aguarde o retorno.",
+        ("fatura",),
+        source="ollama",
+    )
+    component = SpyGenerativeComponent(turn)
+
+    reply = handle_input(session, "minha fatura veio errada", component=component)
+
+    assert session.state == ChatState.ENCERRADO
+    assert reply == turn.reply
+    assert "Atendimento encerrado após resposta do modelo local via Ollama." in session.summary.decisions
+    assert "Atendimento encerrado após resposta do componente local didático." not in session.summary.decisions
+
+
+def test_ollama_turn_in_known_domain_ends_flow_with_ollama_mode():
+    session = Session(state=ChatState.SUPORTE_TECNICO)
+    turn = GeneratedTurn(
+        Intent.SUPORTE_TECNICO,
+        1.0,
+        "Vamos verificar a conexão do seu equipamento.",
+        (),
+        source="ollama",
+    )
+    component = SpyGenerativeComponent(turn)
+
+    reply = handle_input(session, "meu computador não liga", component=component)
+
+    assert session.state == ChatState.ENCERRADO
+    assert reply == turn.reply
+    assert "Atendimento encerrado após resposta do modelo local via Ollama." in session.summary.decisions
+
+
+def test_component_failure_still_triggers_fallback_regardless_of_ollama_mode():
+    """Falha do componente (Ollama fora do ar, por exemplo) continua caindo
+    no mesmo fallback determinístico já usado pro componente local."""
+    session = Session(state=ChatState.SUPORTE_TECNICO)
+    component = FailingGenerativeComponent()
+
+    reply = handle_input(session, "meu computador não liga", component=component)
+
+    assert session.state == ChatState.HUMAN_HANDOFF
+    assert reply == _HANDOFF_REPLY
+
+
+def test_numeric_option_still_does_not_call_component_with_ollama_double():
+    """O caminho numérico nunca chama o componente, independente de qual
+    implementação está configurada (local didática ou Ollama)."""
+    session = Session(state=ChatState.MAIN_MENU)
+    turn = GeneratedTurn(Intent.UNKNOWN, 0.0, "", (), source="ollama")
+    component = SpyGenerativeComponent(turn)
+
+    reply = handle_input(session, "1", component=component)
+
+    assert component.calls == []
+    assert session.state == ChatState.SUPORTE_TECNICO
+    assert "Suporte técnico" in reply
