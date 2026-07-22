@@ -133,20 +133,42 @@ acontece quando ela falha.
 - **Fora do escopo, não um bug**: sem retry, sem streaming, sem
   classificação por LLM.
 
-## Evidências esperadas (a preencher depois da implementação)
+## Evidências (preenchidas após a implementação)
 
-- `tests/test_ollama_generation.py`: chamada correta ao `/api/chat`,
-  payload com contexto em camadas, opções de geração corretas, score/
-  intenção preservados da regra, `expected_intent` não reclassifica,
+- `tests/test_ollama_generation.py` (12 testes): chamada correta ao
+  `/api/chat`, payload com contexto em camadas, opções de geração corretas,
+  score/intenção preservados da regra, `expected_intent` não reclassifica,
   UNKNOWN/HUMAN_HANDOFF não chamam rede, falhas de rede/timeout/status/
-  corpo viram `GenerativeComponentError` — tudo com cliente HTTP
-  injetado, sem rede real.
+  corpo viram `GenerativeComponentError` — tudo com `httpx.MockTransport`,
+  sem rede real.
 - `tests/test_generative_flow.py`: turno com `source="ollama"` encerra o
-  fluxo, resumo registra `ResolutionMode.OLLAMA`, falha do componente
-  aciona fallback, caminho numérico continua sem chamar o componente.
-- `tests/test_main_generation_mode.py`: `local_didactic`, `disabled`,
-  `ollama`, modo desconhecido, timeout/contexto/modelo inválidos.
-- Suíte completa passando (40 testes existentes + os novos).
+  fluxo, resumo registra `ResolutionMode.OLLAMA` (distinto de
+  `LOCAL_DIDACTIC`), falha do componente aciona fallback, caminho numérico
+  continua sem chamar o componente.
+- `tests/test_main_generation_mode.py` (8 testes): `local_didactic`
+  (default e explícito), `disabled`, `ollama` (defaults e overrides via
+  env), modo desconhecido, timeout/contexto/modelo inválidos.
+- Suíte completa: **66 testes passando** (40 existentes + 26 novos).
+- **Validação manual end-to-end** (`GENERATION_MODE=ollama docker compose up
+  --build`, modelo real `llama3.2:1b` local):
+  - Texto livre reconhecido no menu → resposta real gerada pelo modelo,
+    intenção/score determinísticos preservados.
+  - Domínio já conhecido (`expected_intent`) → modelo chamado só pra gerar
+    o texto, sem reclassificar.
+  - Opção numérica → nenhuma chamada ao Ollama (resposta fixa).
+  - Ollama indisponível (`OLLAMA_BASE_URL` apontando pra porta fechada) →
+    app não crasha, cai no fallback determinístico existente.
+  - Revertendo pra `GENERATION_MODE=local_didactic` (default) → comportamento
+    idêntico ao de antes desta aula.
+- **Bug real encontrado e corrigido durante a validação manual** (não nos
+  testes com double, só apareceu com o modelo de verdade): a instrução de
+  tarefa era anexada como mensagem `system` DEPOIS da mensagem do usuário —
+  terminar a lista de mensagens numa mensagem `system` quebra o template de
+  chat do Llama (que espera responder a um turno de usuário), e o modelo
+  devolvia os marcadores de template como texto literal
+  (`<|start_header_id|>assistant<|end_header_id|>`) em vez de só a resposta.
+  Corrigido em `_add_task_instruction`: a instrução agora entra ANTES da
+  última mensagem, não depois.
 
 ## Tags desta evolução
 
