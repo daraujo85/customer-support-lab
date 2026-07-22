@@ -44,8 +44,13 @@ não como sucesso parcial."""
 
 
 def _add_task_instruction(messages: MessagePayload, intent: Intent) -> MessagePayload:
+    """Insere a instrução de tarefa ANTES da última mensagem (a do usuário),
+    nunca depois — terminar a lista numa mensagem `system` quebra o template
+    de chat do modelo (o Llama espera que o turno mais recente seja do
+    usuário) e faz o modelo devolver os marcadores de template como texto
+    (`<|start_header_id|>...`) em vez de só a resposta."""
     instruction = _TASK_INSTRUCTION_TEMPLATE.format(intent=intent.value)
-    return [*messages, {"role": "system", "content": instruction}]
+    return [*messages[:-1], {"role": "system", "content": instruction}, *messages[-1:]]
 
 
 def _extract_reply(response: httpx.Response) -> str:

@@ -42,9 +42,12 @@ def test_calls_chat_endpoint_with_model_options_and_task_instruction():
     assert payload["model"] == "llama3.2:1b"
     assert payload["stream"] is False
     assert payload["options"] == {"temperature": 0, "seed": 42, "num_ctx": 2048}
-    assert payload["messages"][:2] == messages
-    assert payload["messages"][-1]["role"] == "system"
-    assert "financeiro" in payload["messages"][-1]["content"]
+    # Instrução de tarefa fica ANTES da última mensagem (a do usuário), nunca
+    # depois — terminar em `system` quebra o template de chat do modelo.
+    assert payload["messages"][0] == messages[0]
+    assert payload["messages"][-1] == messages[-1]
+    assert payload["messages"][-2]["role"] == "system"
+    assert "financeiro" in payload["messages"][-2]["content"]
     assert turn.source == "ollama"
     assert turn.reply == "Sua fatura está em análise."
     assert turn.intent == Intent.FINANCEIRO
