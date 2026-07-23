@@ -90,15 +90,40 @@ def test_unknown_mode_raises(monkeypatch):
 
 
 def test_ollama_mode_fails_fast_when_prompt_artifact_is_invalid(monkeypatch):
-    """Aula 3.9: artefato de prompt ausente/inválido é erro de CONFIGURAÇÃO —
-    derruba o boot no modo ollama, diferente do Ollama estar desligado (isso
-    é falha de serviço externo, tratada como fallback em runtime, não no boot)."""
+    """Aulas 3.9/3.10: qualquer artefato de prompt ausente/inválido (template-
+    base OU bloco específico de intenção) é erro de CONFIGURAÇÃO — derruba o
+    boot no modo ollama, diferente do Ollama estar desligado (isso é falha de
+    serviço externo, tratada como fallback em runtime, não no boot)."""
     monkeypatch.setenv("GENERATION_MODE", "ollama")
 
     def _raise():
         raise PromptTemplateError("artefato de prompt ausente")
 
-    monkeypatch.setattr(main_module, "load_prompt_template", _raise)
+    monkeypatch.setattr(main_module, "load_prompt_bundle", _raise)
+
+    with pytest.raises(PromptTemplateError):
+        build_generative_component()
+
+
+def test_ollama_mode_fails_fast_when_intent_block_is_missing(monkeypatch):
+    monkeypatch.setenv("GENERATION_MODE", "ollama")
+
+    def _raise():
+        raise PromptTemplateError("bloco de suporte_tecnico ausente")
+
+    monkeypatch.setattr(main_module, "load_prompt_bundle", _raise)
+
+    with pytest.raises(PromptTemplateError):
+        build_generative_component()
+
+
+def test_ollama_mode_fails_fast_when_intent_block_is_empty(monkeypatch):
+    monkeypatch.setenv("GENERATION_MODE", "ollama")
+
+    def _raise():
+        raise PromptTemplateError("bloco de financeiro está vazio")
+
+    monkeypatch.setattr(main_module, "load_prompt_bundle", _raise)
 
     with pytest.raises(PromptTemplateError):
         build_generative_component()
@@ -110,7 +135,7 @@ def test_local_didactic_mode_does_not_depend_on_prompt_artifact(monkeypatch):
     def _raise():
         raise PromptTemplateError("não deveria ser chamado")
 
-    monkeypatch.setattr(main_module, "load_prompt_template", _raise)
+    monkeypatch.setattr(main_module, "load_prompt_bundle", _raise)
 
     component = build_generative_component()
 
@@ -123,6 +148,6 @@ def test_disabled_mode_does_not_depend_on_prompt_artifact(monkeypatch):
     def _raise():
         raise PromptTemplateError("não deveria ser chamado")
 
-    monkeypatch.setattr(main_module, "load_prompt_template", _raise)
+    monkeypatch.setattr(main_module, "load_prompt_bundle", _raise)
 
     assert build_generative_component() is None

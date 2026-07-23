@@ -17,6 +17,12 @@ construir o componente. Fail-fast só no modo `ollama`: artefato de prompt
 ausente ou inválido é erro de CONFIGURAÇÃO da aplicação (derruba o boot),
 diferente do Ollama estar desligado (erro de serviço EXTERNO, tratado como
 fallback em runtime). Ver `specs/m03-a09-prompts-versionados/spec.md`.
+
+Aula 3.10: o carregamento passa a ser de um BUNDLE (`load_prompt_bundle()`)
+— template-base + um bloco por intenção que gera inferência real. O
+fail-fast continua igual (qualquer artefato ausente/inválido derruba o boot
+só no modo `ollama`); o que muda é o TAMANHO da validação, não a política.
+Ver `specs/m03-a10-prompts-condicionais/spec.md`.
 """
 from __future__ import annotations
 
@@ -34,7 +40,7 @@ from .chat.generative import GenerativeComponent
 from .chat.local_generation import LocalDidacticComponent
 from .chat.ollama_generation import OllamaGenerativeComponent
 from .chat.payload import build_payload
-from .chat.prompt_loader import load_prompt_template
+from .chat.prompt_loader import load_prompt_bundle
 from .chat.state import Session
 
 STATIC_DIR = Path(__file__).parent / "static"
@@ -51,13 +57,13 @@ def build_generative_component() -> GenerativeComponent | None:
     if mode == "disabled":
         return None
     if mode == "ollama":
-        task_instruction_template = load_prompt_template()
+        prompt_bundle = load_prompt_bundle()
         return OllamaGenerativeComponent(
             base_url=os.getenv("OLLAMA_BASE_URL", "http://host.docker.internal:11434"),
             model=os.getenv("OLLAMA_MODEL", "llama3.2:1b"),
             timeout_seconds=float(os.getenv("OLLAMA_TIMEOUT_SECONDS", "60")),
             num_ctx=int(os.getenv("OLLAMA_NUM_CTX", "2048")),
-            task_instruction_template=task_instruction_template,
+            prompt_bundle=prompt_bundle,
         )
     raise RuntimeError(f"GENERATION_MODE não suportado: {mode}")
 
