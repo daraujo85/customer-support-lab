@@ -3,11 +3,12 @@ import pytest
 
 from app.chat.generative import GenerativeComponentError, Intent
 from app.chat.ollama_generation import OllamaGenerativeComponent
-from app.chat.prompt_loader import load_prompt_template
+from app.chat.prompt_loader import PromptBundle, load_prompt_bundle
 
-_TASK_INSTRUCTION_TEMPLATE = load_prompt_template()
-"""Aula 3.9: o template oficial agora vem do artefato versionado
-(prompts/task_instruction.md), não de uma constante deste módulo."""
+_PROMPT_BUNDLE = load_prompt_bundle()
+"""Aula 3.10: o bundle oficial (template-base + blocos por intenção) agora
+vem dos artefatos versionados (prompts/task_instruction.md +
+prompts/intents/*.md), não de uma constante deste módulo."""
 
 
 def _component(handler) -> OllamaGenerativeComponent:
@@ -19,7 +20,7 @@ def _component(handler) -> OllamaGenerativeComponent:
         model="llama3.2:1b",
         timeout_seconds=30,
         num_ctx=2048,
-        task_instruction_template=_TASK_INSTRUCTION_TEMPLATE,
+        prompt_bundle=_PROMPT_BUNDLE,
         client=client,
     )
 
@@ -57,6 +58,46 @@ def test_calls_chat_endpoint_with_model_options_and_task_instruction():
     assert turn.source == "ollama"
     assert turn.reply == "Sua fatura está em análise."
     assert turn.intent == Intent.FINANCEIRO
+
+
+def test_intencao_tecnica_envia_somente_orientacao_tecnica():
+    captured = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        import json
+
+        captured["json"] = json.loads(request.content)
+        return _ok_response("Vamos verificar a conexão.")
+
+    component = _component(handler)
+    component.generate(
+        messages=[{"role": "user", "content": "meu computador não liga"}],
+        user_input="meu computador não liga",
+    )
+
+    instruction = captured["json"]["messages"][-2]["content"]
+    assert "orientação inicial segura e reversível" in instruction
+    assert "número do pedido ou da fatura" not in instruction
+
+
+def test_intencao_financeira_envia_somente_orientacao_financeira():
+    captured = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        import json
+
+        captured["json"] = json.loads(request.content)
+        return _ok_response("Sua fatura está em análise.")
+
+    component = _component(handler)
+    component.generate(
+        messages=[{"role": "user", "content": "minha fatura veio errada"}],
+        user_input="minha fatura veio errada",
+    )
+
+    instruction = captured["json"]["messages"][-2]["content"]
+    assert "número do pedido ou da fatura" in instruction
+    assert "orientação inicial segura e reversível" not in instruction
 
 
 def test_valid_response_preserves_deterministic_intent_and_score():
@@ -176,23 +217,33 @@ def test_oversized_content_raises_generative_component_error():
 
 
 def test_constructor_validates_arguments():
+    valid_bundle = PromptBundle(
+        task_template="Área: {intent}.", intent_instructions={Intent.FINANCEIRO: "bloco"}
+    )
+    empty_template_bundle = PromptBundle(task_template="", intent_instructions={Intent.FINANCEIRO: "bloco"})
+    empty_instructions_bundle = PromptBundle(task_template="Área: {intent}.", intent_instructions={})
+
     with pytest.raises(ValueError):
         OllamaGenerativeComponent(
-            base_url="", model="m", timeout_seconds=1, task_instruction_template="t"
+            base_url="", model="m", timeout_seconds=1, prompt_bundle=valid_bundle
         )
     with pytest.raises(ValueError):
         OllamaGenerativeComponent(
-            base_url="http://x", model="", timeout_seconds=1, task_instruction_template="t"
+            base_url="http://x", model="", timeout_seconds=1, prompt_bundle=valid_bundle
         )
     with pytest.raises(ValueError):
         OllamaGenerativeComponent(
-            base_url="http://x", model="m", timeout_seconds=0, task_instruction_template="t"
+            base_url="http://x", model="m", timeout_seconds=0, prompt_bundle=valid_bundle
         )
     with pytest.raises(ValueError):
         OllamaGenerativeComponent(
-            base_url="http://x", model="m", timeout_seconds=1, task_instruction_template="t", num_ctx=0
+            base_url="http://x", model="m", timeout_seconds=1, prompt_bundle=valid_bundle, num_ctx=0
         )
     with pytest.raises(ValueError):
         OllamaGenerativeComponent(
-            base_url="http://x", model="m", timeout_seconds=1, task_instruction_template=""
+            base_url="http://x", model="m", timeout_seconds=1, prompt_bundle=empty_template_bundle
+        )
+    with pytest.raises(ValueError):
+        OllamaGenerativeComponent(
+            base_url="http://x", model="m", timeout_seconds=1, prompt_bundle=empty_instructions_bundle
         )

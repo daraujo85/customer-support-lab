@@ -1,6 +1,12 @@
 import pytest
 
-from app.chat.prompt_loader import PromptTemplateError, load_prompt_template
+from app.chat.generative import Intent
+from app.chat.prompt_loader import (
+    DEFAULT_INTENT_PROMPT_PATHS,
+    PromptTemplateError,
+    load_prompt_bundle,
+    load_prompt_template,
+)
 
 
 def test_loads_the_official_prompt_artifact():
@@ -82,3 +88,59 @@ def test_rendered_prompt_is_identical_to_previous_inline_version():
         "Não peça senha, cartão completo ou credenciais.\n"
         "Não invente dados que não aparecem no contexto."
     )
+
+
+# ---------------------------------------------------------------------------
+# Aula 3.10 — bundle com os blocos específicos por intenção
+# ---------------------------------------------------------------------------
+
+
+def test_load_prompt_bundle_loads_the_three_official_blocks():
+    bundle = load_prompt_bundle()
+
+    assert bundle.task_template.strip()
+    assert set(bundle.intent_instructions) == {
+        Intent.SUPORTE_TECNICO,
+        Intent.FINANCEIRO,
+        Intent.INFORMACOES_CONTA,
+    }
+    for instruction in bundle.intent_instructions.values():
+        assert instruction.strip()
+
+
+def test_load_prompt_bundle_missing_intent_file_raises(tmp_path):
+    missing_paths = dict(DEFAULT_INTENT_PROMPT_PATHS)
+    missing_paths[Intent.FINANCEIRO] = tmp_path / "does_not_exist.md"
+
+    with pytest.raises(PromptTemplateError):
+        load_prompt_bundle(intent_paths=missing_paths)
+
+
+def test_load_prompt_bundle_empty_intent_file_raises(tmp_path):
+    empty = tmp_path / "empty.md"
+    empty.write_text("", encoding="utf-8")
+    paths = dict(DEFAULT_INTENT_PROMPT_PATHS)
+    paths[Intent.SUPORTE_TECNICO] = empty
+
+    with pytest.raises(PromptTemplateError):
+        load_prompt_bundle(intent_paths=paths)
+
+
+def test_load_prompt_bundle_intent_file_with_placeholder_raises(tmp_path):
+    bad = tmp_path / "bad.md"
+    bad.write_text("Área: {intent}.", encoding="utf-8")
+    paths = dict(DEFAULT_INTENT_PROMPT_PATHS)
+    paths[Intent.INFORMACOES_CONTA] = bad
+
+    with pytest.raises(PromptTemplateError):
+        load_prompt_bundle(intent_paths=paths)
+
+
+def test_load_prompt_bundle_intent_file_with_invalid_utf8_raises(tmp_path):
+    bad_encoding = tmp_path / "bad_encoding.md"
+    bad_encoding.write_bytes(b"\xff\xfe area")
+    paths = dict(DEFAULT_INTENT_PROMPT_PATHS)
+    paths[Intent.FINANCEIRO] = bad_encoding
+
+    with pytest.raises(PromptTemplateError):
+        load_prompt_bundle(intent_paths=paths)
