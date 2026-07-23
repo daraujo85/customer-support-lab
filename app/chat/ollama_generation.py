@@ -19,11 +19,17 @@ trás dessas decisões (por que não pedir intent+confidence ao modelo, por
 que sem retry, o que fica probabilístico e o que continua determinístico).
 
 Aula 3.9: a instrução de tarefa deixa de ser uma constante Python neste
-arquivo — agora é injetada no construtor (`task_instruction_template`),
-já carregada e validada por `chat.prompt_loader` no ponto de composição
-da aplicação (`app.main`). Este módulo só RENDERIZA o template recebido;
-não conhece caminho de arquivo nenhum. Ver
+arquivo — passa a ser carregada e validada por `chat.prompt_loader` no
+ponto de composição da aplicação (`app.main`). Ver
 `specs/m03-a09-prompts-versionados/spec.md`.
+
+Aula 3.10: a instrução deixa de ser um único template igual pra toda
+intenção — agora é MONTADA por `chat.prompt_builder.build_task_instruction`,
+combinando o template-base com um bloco específico da área já aceita
+(suporte técnico, financeiro, informações de conta). Este módulo recebe o
+`PromptBundle` já carregado (nunca lê arquivo) e só decide QUANDO chamar a
+montagem — a composição em si é responsabilidade de `chat.prompt_builder`.
+Ver `specs/m03-a10-prompts-condicionais/spec.md`.
 """
 from __future__ import annotations
 
@@ -31,20 +37,21 @@ import httpx
 
 from .generative import GeneratedTurn, GenerativeComponentError, Intent, MessagePayload
 from .local_generation import classify_intent
+from .prompt_builder import build_task_instruction
+from .prompt_loader import PromptBundle
 
 _MAX_REPLY_CHARS = 2000
 """Limite defensivo — uma resposta anormalmente grande é tratada como falha,
 não como sucesso parcial."""
 
 
-def _add_task_instruction(messages: MessagePayload, intent: Intent, template: str) -> MessagePayload:
-    """Insere a instrução de tarefa (já RENDERIZADA a partir de `template`)
+def _add_task_instruction(messages: MessagePayload, instruction: str) -> MessagePayload:
+    """Insere a instrução de tarefa (já MONTADA por `build_task_instruction`)
     ANTES da última mensagem (a do usuário), nunca depois — terminar a lista
     numa mensagem `system` quebra o template de chat do modelo (o Llama
     espera que o turno mais recente seja do usuário) e faz o modelo devolver
     os marcadores de template como texto (`<|start_header_id|>...`) em vez
     de só a resposta."""
-    instruction = template.format(intent=intent.value)
     return [*messages[:-1], {"role": "system", "content": instruction}, *messages[-1:]]
 
 
@@ -80,9 +87,10 @@ class OllamaGenerativeComponent:
     transporte falso (`httpx.MockTransport`) nos testes, sem abrir conexão
     de rede real.
 
-    `task_instruction_template`: o template JÁ carregado e validado (ver
-    `chat.prompt_loader.load_prompt_template`) — este componente só
-    renderiza, nunca lê arquivo."""
+    `prompt_bundle`: os artefatos de prompt JÁ carregados e validados (ver
+    `chat.prompt_loader.load_prompt_bundle`) — este componente nunca lê
+    arquivo; só decide QUANDO montar a instrução (`chat.prompt_builder`
+    decide COMO)."""
 
     def __init__(
         self,
@@ -90,7 +98,7 @@ class OllamaGenerativeComponent:
         base_url: str,
         model: str,
         timeout_seconds: float,
-        task_instruction_template: str,
+        prompt_bundle: PromptBundle,
         num_ctx: int = 2048,
         client: httpx.Client | None = None,
     ) -> None:
@@ -102,13 +110,15 @@ class OllamaGenerativeComponent:
             raise ValueError("timeout_seconds precisa ser maior que zero")
         if num_ctx <= 0:
             raise ValueError("num_ctx precisa ser maior que zero")
-        if not task_instruction_template:
-            raise ValueError("task_instruction_template não pode ser vazio")
+        if not prompt_bundle.task_template:
+            raise ValueError("prompt_bundle.task_template não pode ser vazio")
+        if not prompt_bundle.intent_instructions:
+            raise ValueError("prompt_bundle.intent_instructions não pode ser vazio")
 
         self._base_url = base_url.rstrip("/")
         self._model = model
         self._num_ctx = num_ctx
-        self._task_instruction_template = task_instruction_template
+        self._prompt_bundle = prompt_bundle
         self._client = client or httpx.Client(timeout=timeout_seconds)
 
     def generate(
@@ -132,7 +142,8 @@ class OllamaGenerativeComponent:
             score = decision.score
             matched_terms = decision.matched_terms
 
-        request_messages = _add_task_instruction(messages, intent, self._task_instruction_template)
+        instruction = build_task_instruction(self._prompt_bundle, intent)
+        request_messages = _add_task_instruction(messages, instruction)
         try:
             response = self._client.post(
                 f"{self._base_url}/api/chat",
