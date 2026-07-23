@@ -52,6 +52,18 @@ normalmente e cai no fallback determinístico na primeira chamada que falhar.
 
 ## Estado atual
 
+**Aula 3.10** — o prompt passa a ser MONTADO condicionalmente: além do
+template-base (`prompts/task_instruction.md`), cada intenção que gera
+inferência real (suporte técnico, financeiro, informações de conta) tem um
+bloco próprio em `prompts/intents/<intent>.md`. `app/chat/prompt_loader.py`
+carrega os dois tipos num `PromptBundle`; o novo módulo puro
+`app/chat/prompt_builder.py` seleciona o bloco certo (usando a intenção já
+aceita pela classificação determinística) e monta a instrução final — o
+modelo nunca escolhe qual bloco usar, e nunca vê os blocos das outras
+áreas. `GENERATION_MODE=ollama` com qualquer artefato (base ou bloco)
+ausente/inválido continua falhando rápido no boot. Ver
+`specs/m03-a10-prompts-condicionais/spec.md`.
+
 **Aula 3.9** — o prompt vira artefato versionado: a instrução de tarefa que
 vivia como constante Python em `ollama_generation.py` agora mora em
 `prompts/task_instruction.md`, carregada e validada por
